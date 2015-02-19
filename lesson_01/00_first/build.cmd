@@ -1,3 +1,5 @@
+SET PATH=C:\CodeBlocks\MinGW\bin;%PATH%
+
 echo ANSI C 
 g++ -O2 -Wall helloworld.c -o helloworld_c.exe
 helloworld_c.exe
