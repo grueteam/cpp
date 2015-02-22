@@ -1,4 +1,5 @@
-﻿/* Hello World на C */
+﻿//-->
+/* Hello World на C */
 #include <stdio.h> /* Подключаем библиотеку */
 //#include <iostream>
 
@@ -7,3 +8,4 @@ int main() {
   printf("C: Hello world!\n");
   return 0;
 }
+//<--
