@@ -1,4 +1,5 @@
-﻿//-->
+﻿//* В C++ используем библиотеку STL **iostream**
+//-->
 // Hello World на C++
 #include <iostream>
 

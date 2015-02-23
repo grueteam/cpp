@@ -11,6 +11,7 @@ int main() {
   return 0;
 }
 ```
+В C++ используем библиотеку STL **iostream**
 ``` cpp
 // Hello World на C++
 #include <iostream>
