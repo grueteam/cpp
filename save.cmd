@@ -1,3 +1,7 @@
+AStyle --options=astyle.cfg --recursive *.c 
+AStyle --options=astyle.cfg --recursive *.cpp 
+AStyle --options=astyle.cfg --recursive *.h 
+
 rem Добавить все изменения
 git add .
 rem Сохранить их в истории с сообщением "Save changes"
