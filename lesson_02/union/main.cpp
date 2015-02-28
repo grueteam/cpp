@@ -2,7 +2,7 @@
 
 using namespace std;
 
-// typedef Определение_типа Имя_нового_типа;
+// typedef РћРїСЂРµРґРµР»РµРЅРёРµ_С‚РёРїР° РРјСЏ_РЅРѕРІРѕРіРѕ_С‚РёРїР°;
 typedef unsigned long MyType;
 
 union InMemoryPresentation {
@@ -29,8 +29,8 @@ int main() {
 
     for(int b = 7; b >= 0; --b) {
       unsigned char byte = u.b[i];
-      // Число:    01101110  00001101
-      // Ном.бита: 76543210         1
+      // Р§РёСЃР»Рѕ:    01101110  00001101
+      // РќРѕРј.Р±РёС‚Р°: 76543210         1
       cout << ((byte >> b) & 1);
     }
 

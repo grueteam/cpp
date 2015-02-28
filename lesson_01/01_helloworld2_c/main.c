@@ -1,4 +1,4 @@
-// Чистый C
+п»ї// Р§РёСЃС‚С‹Р№ C
 #include <stdio.h>
 //#include <stdlib.h>
 #include <locale.h>
@@ -10,7 +10,7 @@ int main() {
   int b = 3;
   int c = a + b;
 
-  printf("Это моя первая программа!\n");
+  printf("Р­С‚Рѕ РјРѕСЏ РїРµСЂРІР°СЏ РїСЂРѕРіСЂР°РјРјР°!\n");
 
   printf("%d+%d=%d\n", a, b, c);
 
