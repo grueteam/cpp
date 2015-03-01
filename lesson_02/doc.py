@@ -4,7 +4,7 @@ import sys
 
 PREFIX = u'//'
 
-# sys.stdout = open("README.md", "w", encoding="utf-8")
+sys.stdout = open("README.md", "w", encoding="utf-8")
 
 
 def get_extension(file_name):

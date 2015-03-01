@@ -25,7 +25,7 @@
 -----------------------------------------------------
 * Code::Blocks: http://www.codeblocks.org/downloads/binaries - выбирайте версию вместе с MinGW (например: codeblocks-13.12mingw-setup.exe)
 
-Программа «Hello world!» на C и на C++. Отличия С и C++
+Программа "Hello world!" на C и на C++. Отличия С и C++
 -------------------------------------------------------
 * [Hello world C++](/lesson_01/00_first/helloworld.cpp)
 * [Hello world C](/lesson_01/00_first/helloworld.c)
