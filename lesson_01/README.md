@@ -61,102 +61,41 @@
 
 .\00_HelloWorld_C\main.c
 .\00_HelloWorld_Cpp\main.cpp
-Статическая
-Динамическая: new / delete, [m/c]alloc / free
+Виды памяти
+-----------
+* Статическая
+* Стек: локальные переменные + вызов функций / методов
+* Динамическая: new / delete, [m/c]alloc / free
+``` cpp
+// Статическая
+int staticArray[1000];
+int staticConsts[3] = {3, 4, 5};
+
+int ff(){
+  static int count = 0;
+}
+```
+
 Стек: локальные переменные + вызов функций / методов
-f();
+``` cpp
+int f() {
+  int x = 10;
+  f();
+}
+```
+
+Динамическая: new / delete, [m/c]alloc / free
+``` cpp
+
+```
+
 .\00_HelloWorld_Cpp\test.cpp
 .\00_OnlyC\main.c
 Только чистый C
-.\00_first\README.md
-.\README_1.md
-Первая программа на чистом C
-Подключаем библиотеку: **stdio.h**
-``` cpp
-/* Hello World на C */
-#include <stdio.h> /* Подключаем библиотеку */
-// #include <iostream> // Для C++
-
-int main() {
-  printf("C: Hello world!\n");
-  // std::cout << "Test" << std::endl;  // Для C++
-  return 0;
-}
-```
-В C++ используем библиотеку STL **iostream**
-``` cpp
-// Hello World на C++
-#include <iostream>
-
-using namespace std;
-
-int main() {
-  cout << "C++: Hello world!" << endl;
-  return 0;
-}
-```
-
-.\helloworld.c
-* Первая программа на чистом C
-* Подключаем библиотеку: **stdio.h**
-``` cpp
-/* Hello World на C */
-#include <stdio.h> /* Подключаем библиотеку */
-// #include <iostream> // Для C++
-
-int main() {
-  printf("C: Hello world!\n");
-  // std::cout << "Test" << std::endl;  // Для C++
-  return 0;
-}
-```
-
-.\helloworld.cpp
-* В C++ используем библиотеку STL **iostream**
-``` cpp
-// Hello World на C++
-#include <iostream>
-
-using namespace std;
-
-int main() {
-  cout << "C++: Hello world!" << endl;
-  return 0;
-}
-```
-
-.\main.cpp
-
-.\00_first\README_1.md
-Первая программа на чистом C
-Подключаем библиотеку: **stdio.h**
-``` cpp
-/* Hello World на C */
-#include <stdio.h> /* Подключаем библиотеку */
-// #include <iostream> // Для C++
-
-int main() {
-  printf("C: Hello world!\n");
-  // std::cout << "Test" << std::endl;  // Для C++
-  return 0;
-}
-```
-В C++ используем библиотеку STL **iostream**
-``` cpp
-// Hello World на C++
-#include <iostream>
-
-using namespace std;
-
-int main() {
-  cout << "C++: Hello world!" << endl;
-  return 0;
-}
-```
-
 .\00_first\helloworld.c
-* Первая программа на чистом C
-* Подключаем библиотеку: **stdio.h**
+Первая программа на чистом C
+----------------------------
+Подключаем библиотеку: **stdio.h**
 ``` cpp
 /* Hello World на C */
 #include <stdio.h> /* Подключаем библиотеку */
@@ -184,6 +123,16 @@ int main() {
 ```
 
 .\00_first\main.cpp
+.\01_BuildCmdLine\README.md
+Скрипт для сборки
+-----------------
+``` bat
+@echo Build exe-file:
+g++ a.cpp -Wall -O3 -o MyFile.exe
+@echo Run file:
+MyFile.exe
+```
+
 .\01_BuildCmdLine\a.cpp
 .\01_first_C\main.c
 Подключение библиотек
@@ -228,41 +177,92 @@ cout << "Введите A и B: ";
 тип имя_переменной_1, имя_переменной_2;
 .\02_bit_operators\main.cpp
 Побитовые операции с целыми числами
+-----------------------------------
 Каждый бит как логическая переменная
->> - побитовые сдвиг вправо
-101111 -> 001011
-<< - побитовые сдвиг влево
-00101111 -> 10111100
-5 >> 1
-101 >> 1 -> 10
-Логические операции (побитовые)
-& - И (AND)
-0011 & 0101 => 0001
-| - ИЛИ (OR)
-0011 & 0101 => 0111
-0 0  -> 0
-0 1  -> 1
-1 0  -> 1
-1 1  -> 1
-^ - Исключающее ИЛИ (XOR) - не равно
-0011 & 0101 => 0110
-0 0  -> 0
-0 1  -> 1
-1 0  -> 1
-1 1  -> 0
-~ - Инверсия (NOT)
-~01 => 10
-3 = 11
-c = 2, A::a = 4 + A::b;
+Пространства имён
+``` cpp
+namespace A {
+int a;
+}
+
+namespace B {
+int a;
+}
+```
+
+``` cpp
+int main() {
+  A::a = 1;
+  B::a = 2;
+  // >> - побитовые сдвиг вправо
+  // 101111 -> 001011
+  // << - побитовые сдвиг влево
+  // 00101111 -> 10111100
+  int c = 3 + 5 >> 1;
+  // 5 >> 1
+  // 101 >> 1 -> 10
+
+  int lp = 10 << 2;
+
+  // Логические операции (побитовые)
+  // & - И (AND)
+  // 0011 & 0101 => 0001
+  // | - ИЛИ (OR)
+  // 0011 & 0101 => 0111
+  //  0 0  -> 0
+  //  0 1  -> 1
+  //  1 0  -> 1
+  //  1 1  -> 1
+  // ^ - Исключающее ИЛИ (XOR) - не равно
+  // 0011 & 0101 => 0110
+  //  0 0  -> 0
+  //  0 1  -> 1
+  //  1 0  -> 1
+  //  1 1  -> 0
+
+  // ~ - Инверсия (NOT)
+  // ~01 => 10
+  // 3 = 11
+  int k = ~1 & 3; // 01 -> 10
+  cout << "k = " << k << endl;
+
+  //c = 2, A::a = 4 + A::b;
+  cout << "c = " << c << endl;
+  return 0;
+}
+```
+
 .\02_hw_c_qt\main.c
-Первый пример с файлом проекта для Qt
+Пример с файлом проекта для Qt
+------------------------------
 Вывод Hello World на экран
 .\02_int_operations\main.cpp
-Базовые арифметические операции
-* - умножение
-/ - деление
-% - остаток от деления (взятие по модулю)
-Пытаемся вызвать несуществующую команду операционной системы
+Арифметические операции
+-----------------------
+``` cpp
+  int a; // "int" - тип переменной, "a" - имя переменной
+  cout << "a = ";
+  cin >> a;
+
+  cout << "b = ";
+  int b;
+  cin >> b;
+
+  // * - умножение
+  // / - деление
+  // % - остаток от деления (взятие по модулю)
+  cout << "a + b = " << (a + b) << endl; // В C++ используется endl вместо "\n"
+  cout << "a - b = " << (a - b) << endl;
+  cout << "a * b = " << (a * b) << endl;
+  cout << "a / b = " << (a / b) << endl;
+  cout << "a % b = " << (a % b) << endl;
+
+
+  // Пытаемся вызвать несуществующую команду операционной системы
+  system("NetTakoiComandy");
+  system("pause");
+```
+
 .\02_operators_chain\main.cpp
 Цепочки операторов
 Объявление 2-х переменных
@@ -472,10 +472,28 @@ end the recursion chain and make posible more digits
 Программа выводит все решения уравнения (два, одно), "решений нет",
 если их нет или "бесконечно много решений", если подходит любое значение x (a = 0, b = 0, c = 0).
 Обработать все варианты исходных данных.
-TODO: реализовать
-Коэффициенты квадратного уравнения
-a*x^2 + b*x + c = 0
-Вызов функции решения квадратного уравнения
+``` cpp
+void solve_equation(double a, double b, double c) {
+  // TODO: реализовать
+}
+```
+
+``` cpp
+  // Коэффициенты квадратного уравнения
+  double a, b, c;
+  // a*x^2 + b*x + c = 0
+  cout << "a = ";
+  cin >> a;
+  cout << "b = ";
+  cin >> b;
+  cout << "c = ";
+  cin >> c;
+  cout << endl;
+
+  // Вызов функции решения квадратного уравнения
+  solve_equation(a, b, c);
+```
+
 .\OpenGL_Test\main.c
 .\main.cpp
 Комментарии C++

@@ -319,6 +319,7 @@ regex_match example
 using explicit flags:
 .\05_Pattern_Singletone\main.cpp
 Singletone - одиночка
+---------------------
 Singletone
 Дружественный класс
 Конструктор
@@ -344,6 +345,8 @@ T - из какого класса хотим сделать Singletone
 мы внутри класса T
 Первоначально экземпляр класса не создан
 .\06_AbstractFactory\main.cpp
+Абстрактная фабрика
+-------------------
 Билет
 Prototype
 Номер рейса
@@ -581,6 +584,7 @@ class PackedArray {
       pa.setValue(i, v);
       assert(pa.getValue(i) == v);
     }
+
 ```
 
 Случайный тест
@@ -591,6 +595,7 @@ class PackedArray {
     pa.setValue(i, v);
     assert(pa.getValue(i) == v);
   }
+
 ```
 
 Из 10 элементов по 4 бита
@@ -603,6 +608,7 @@ class PackedArray {
     pa2.setValue(i, v);
     assert(pa2.getValue(i) == v);
   }
+
 ```
 
 По 5 бит, с перехлёстом байтов
@@ -623,6 +629,7 @@ class PackedArray {
     pa5.setValue(i, v);
     assert(pa5.getValue(i) == v);
   }
+
 ```
 
 С другим типом данных и перехлёстом
@@ -638,5 +645,6 @@ class PackedArray {
     //SHOW(pa11.getValue(i));
     assert(pa11.getValue(i) == v);
   }
+
 ```
 

@@ -2,24 +2,32 @@
 
 using namespace std;
 
-class StackElement {
- public:
+// Элемент стека
+//-->
+struct StackElement {
   int value; // Значение элемента стека
   StackElement* next; // Указатель на следующий элемент стека
 };
+//<--
 
-class Stack { //struct
+//-->
+class Stack { // Можно использовать struct
   StackElement* root;
+  //<--
 
  public:
 
-  // Конструктор
-  //  - называется как класс
-  //  - нет возвращаемого значения
-  //  - параметры как у обычных методов
+  // Конструктор:
+  //  * называется так же как класс
+  //  * нет возвращаемого значения
+  //  * параметры как у обычных методов
+  //  * цель - инициализация объекта
+  //-->
   Stack() : root(NULL) { }
+  //<--
 
   // Деструктор - очистка памяти
+  //-->
   ~Stack() {
     while(root != NULL) {
       StackElement* saveForDelete = root;
@@ -27,8 +35,10 @@ class Stack { //struct
       delete saveForDelete;
     }
   }
+  //<--
 
-  // Поместить на вершину стека
+  // Поместить значение на вершину стека
+  //-->
   void push(int newValue) {
     // Создали новый элемент стека с новым значением
     StackElement* newElement = new StackElement;
@@ -38,8 +48,10 @@ class Stack { //struct
     // Делаем новый элемент первым в списке
     root = newElement;
   }
+  //<--
 
   // Получить значение с вершины стека
+  //-->
   int pop() {
     if(root == NULL) {
       cout << "Stack is empty!" << endl;
@@ -57,18 +69,23 @@ class Stack { //struct
     // Вернём значение
     return value;
   }
+  //<--
 
   // Показать все элементы
+  //-->
   void show() {
     for(StackElement* cur = root;
         cur != NULL;
         cur = cur->next)
       cout << cur->value << endl;
   }
+  //<--
 };
 
 
 int main() {
+  // Использование стека
+  //-->
   Stack s;
   s.push(2);
   s.push(4);
@@ -76,9 +93,10 @@ int main() {
   s.show();
   cout << "pop result = " << s.pop() << endl;
   s.show();
-
+  //<--
 
   return 0;
 }
 
 // Д.з. однонаправленный список
+// ----------------------------

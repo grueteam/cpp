@@ -1,10 +1,12 @@
-// Базовые арифметические операции
+// Арифметические операции
+// -----------------------
 #include <iostream>
 #include <cstdlib>
 
 using namespace std;
 
 int main() {
+  //-->
   int a; // "int" - тип переменной, "a" - имя переменной
   cout << "a = ";
   cin >> a;
@@ -26,6 +28,7 @@ int main() {
   // Пытаемся вызвать несуществующую команду операционной системы
   system("NetTakoiComandy");
   system("pause");
+  //<--
 
   return 0;
 }

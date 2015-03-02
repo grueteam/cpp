@@ -1,3 +1,6 @@
+// Основная программа на Qt
+// ------------------------
+//-->
 #include "mainwindow.h"
 #include <QApplication>
 #include <QDebug>
@@ -30,3 +33,4 @@ int main(int argc, char* argv[]) {
   cout << "Closing... res = " << res << endl;
   return res;
 }
+//<--
