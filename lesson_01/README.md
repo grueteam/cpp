@@ -19,8 +19,8 @@
 
 Выбор компилятора и IDE
 -----------------------
-* GCC - GNU Compiler Collection
-* Visual C++ Compiler
+* GCC - GNU Compiler Collection - кроссплатформенный компилятор
+* Visual C++ Compiler - колимпилятор под Windows от Microsoft
 
 Установка IDE Code::Blocks. Запуск программы. Отладка
 -----------------------------------------------------
@@ -71,7 +71,7 @@
 int staticArray[1000];
 int staticConsts[3] = {3, 4, 5};
 
-int ff(){
+int ff() {
   static int count = 0;
 }
 ```
@@ -92,40 +92,30 @@ int f() {
 .\00_HelloWorld_Cpp\test.cpp
 .\00_OnlyC\main.c
 Только чистый C
-.\00_first\helloworld.c
-Первая программа на чистом C
-----------------------------
-Подключаем библиотеку: **stdio.h**
+---------------
 ``` cpp
-/* Hello World на C */
-#include <stdio.h> /* Подключаем библиотеку */
-// #include <iostream> // Для C++
+#include <stdio.h>
+#include <stdlib.h>
 
 int main() {
-  printf("C: Hello world!\n");
-  // std::cout << "Test" << std::endl;  // Для C++
+  int N = 10;
+  int a, b;
+
+  printf("N = %d\n", N);
+  scanf("%d %d", &a, &b);
+  /* a -> значение */
+  printf("a + b = %d\n", a + b);
+
+  a = b * b;
+  printf("a = %d\n", a);
+
   return 0;
 }
 ```
 
-.\00_first\helloworld.cpp
-* В C++ используем библиотеку STL **iostream**
-``` cpp
-// Hello World на C++
-#include <iostream>
-
-using namespace std;
-
-int main() {
-  cout << "C++: Hello world!" << endl;
-  return 0;
-}
-```
-
-.\00_first\main.cpp
 .\01_BuildCmdLine\README.md
-Скрипт для сборки
------------------
+Скрипт для сборки из командной строки Windows
+---------------------------------------------
 ``` bat
 @echo Build exe-file:
 g++ a.cpp -Wall -O3 -o MyFile.exe
@@ -265,8 +255,13 @@ int main() {
 
 .\02_operators_chain\main.cpp
 Цепочки операторов
-Объявление 2-х переменных
+------------------
+Объявляем 2 переменные
 целого типа
+``` cpp
+  int a = 3, b = 5;
+```
+
 Сокращённая форма оператора присваивания
 Инкремент
 Пенять значение 2-х переменных местами
@@ -316,6 +311,7 @@ Microsoft C++
 setlocale(LC_ALL, "Russian");
 .\04_types_demo\main.cpp
 Операции
+--------
 .\05_floats\main.cpp
 Пример на погрешность вычислений в вещественных числах
 fabs - взять по модулю
@@ -335,18 +331,40 @@ a = a ^ b
 b = b ^ a
 a = a ^ b
 .\07_if\main.cpp
-Первый пример на условный оператор if
-if - условный оператор
-Сюда мы никогда не попадём
-Сюда мы попадём всегда
->= - больше или равно
-<= - меньше или равно
-!= не равно
-!a
-> - больше
-< - меньше
-&& - И
-|| - ИЛИ
+Условный оператор if
+--------------------
+Синтаксис:
+``` cpp
+  if(/*Условие*/ 1 )
+    cout << "Если условие истинно!" << endl;
+  else
+    cout << "Если условие ложно!" << endl;
+```
+
+Всегда ложное условие
+``` cpp
+  if(0) {
+    // Сюда мы никогда не попадём
+  }
+```
+
+Всегда истинное условие
+``` cpp
+  if(1) {
+    // Сюда мы попадём всегда
+  }
+```
+
+Операции сравнения:
+-------------------
+* >= - больше или равно
+* <= - меньше или равно
+* != не равно
+* !a
+* > - больше
+* < - меньше
+* && - логическое И
+* || - логическое ИЛИ
 .\08_if\main.cpp
 Условный оператор if
 && - логическое И
@@ -356,6 +374,37 @@ if - условный оператор
 .\09_if_error\main.cpp
 Самая характерная (распространённая)
 ошибка при применении if
+.\0_first\helloworld.c
+Первая программа на чистом C
+----------------------------
+Подключаем библиотеку: **stdio.h**
+``` cpp
+/* Hello World на C */
+#include <stdio.h> /* Подключаем библиотеку */
+// #include <iostream> // Для C++
+
+int main() {
+  printf("C: Hello world!\n");
+  // std::cout << "Test" << std::endl;  // Для C++
+  return 0;
+}
+```
+
+.\0_first\helloworld.cpp
+* В C++ используем библиотеку STL **iostream**
+``` cpp
+// Hello World на C++
+#include <iostream>
+
+using namespace std;
+
+int main() {
+  cout << "C++: Hello world!" << endl;
+  return 0;
+}
+```
+
+.\0_first\main.cpp
 .\10_min_if\main.cpp
 Минимум из двух чисел при помощи оператора if
 .\11_function_visibility\main.c
@@ -460,9 +509,35 @@ B16(10101010,01010101) = 43605
 B32(10000000,11111111,10101010,01010101) = 2164238933
 .\99_binary_constants\main.cpp
 Представление двоичных констант в C++
+-------------------------------------
 Рекурсивный "шаблон"
-Macro-processing glue: force the number to be octal to both
-end the recursion chain and make posible more digits
+``` cpp
+template<long long N>
+struct bin {
+  enum {
+    value = (N % 8) + (bin < N / 8 >::value << 1)
+  };
+};
+
+template<>
+struct bin<0> {
+  enum { value = 0 };
+};
+
+// Macro-processing glue: force the number to be octal to both
+// end the recursion chain and make posible more digits
+#define binary(n) bin<0##n>::value
+
+// Проверка работы макроса
+int main() {
+  cout << bin<01000>::value << endl;
+  cout << bin<1000>::value << endl;
+  cout << binary(01000) << endl;
+  cout << binary(1000) << endl;
+  return 0;
+}
+```
+
 .\HomeWork\main.cpp
 Решение квадратного уравнения
 -------------------------------

@@ -18,8 +18,8 @@
 
 Выбор компилятора и IDE
 -----------------------
-* GCC - GNU Compiler Collection 
-* Visual C++ Compiler
+* GCC - GNU Compiler Collection - кроссплатформенный компилятор
+* Visual C++ Compiler - колимпилятор под Windows от Microsoft
 
 Установка IDE Code::Blocks. Запуск программы. Отладка
 -----------------------------------------------------
