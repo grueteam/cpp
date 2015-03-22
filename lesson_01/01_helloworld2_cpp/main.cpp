@@ -5,7 +5,10 @@
 using namespace std;
 
 int main() {
+  // Вывод в консоль по-русски:
+  //-->
   setlocale(LC_ALL, "Russian");
+  //<--
 
   int a = 2;
   int b = 3;
