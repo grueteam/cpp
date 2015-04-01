@@ -4,6 +4,7 @@
 //-->
 /* Hello World на C */
 #include <stdio.h> /* Подключаем библиотеку */
+#include <stdlib.h> /* ..ещё одну библиотеку */
 // #include <iostream> // Для C++
 
 int main() {

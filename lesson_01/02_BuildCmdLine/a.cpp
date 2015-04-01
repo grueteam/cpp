@@ -1,3 +1,6 @@
+// Сборка из командной строки
+// --------------------------
+//-->
 #include <iostream>
 
 int main() {
@@ -5,3 +8,4 @@ int main() {
   std::cout << "Hello world! " << i << std::endl;
   return 0;
 }
+//<--
