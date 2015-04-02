@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="helloworld2_cpp" />
+		<Option title="03_mod_dependency" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/helloworld2_cpp" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/03_mod_dependency" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/helloworld2_cpp" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/03_mod_dependency" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -32,7 +32,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="C.h" />
+		<Unit filename="a.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="modules/b.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

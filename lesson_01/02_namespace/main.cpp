@@ -26,12 +26,13 @@ int secondAudioVar;
 }
 
 //using namespace std;
-//using namespace audio;
-//using namespace video;
+using namespace audio;
+using namespace video;
 
 int main() {
-  audio::audioFunction();
-  video::videoFunction();
+  audioFunction();
+  videoFunction();
+
   audio::counter = 10;
   video::counter = 12;
 

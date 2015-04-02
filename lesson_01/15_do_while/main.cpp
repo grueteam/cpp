@@ -11,10 +11,10 @@ int main() {
   int N = 254;
   cout << "N = " << N << " = (inverse binary) = ";
 
-  do {
+  do { // Repeat
     cout << N % 2;
     N /= 2;
-  } while(N > 0);
+  } while(N > 0); // Until
 
   cout << endl;
   //<--

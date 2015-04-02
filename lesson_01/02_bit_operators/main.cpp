@@ -3,6 +3,8 @@
 // Каждый бит как логическая переменная
 #include <iostream>
 
+#define SHOW(x) cout << #x << " = " << x << endl;
+
 using namespace std;
 
 // Пространства имён
@@ -51,6 +53,9 @@ int main() {
   // 3 = 11
   int k = ~1 & 3; // 01 -> 10
   cout << "k = " << k << endl;
+
+  unsigned int kk = ~1;
+  SHOW(kk)
 
   //c = 2, A::a = 4 + A::b;
   cout << "c = " << c << endl;

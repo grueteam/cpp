@@ -10,7 +10,6 @@ void f() {
 
 // F9 - компиляция и запуск на выполнение
 //  с ожиданием в конце нажатия клавиши
-int main() {
+void main() {
   printf("Hello world!\n");
-  return 0;
 }

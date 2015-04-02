@@ -37,15 +37,16 @@ void ints() {
   // U - unsigned - беззнаковые типы
   // S - signed - знаковые типы
   char c = 'a';
-  cout << "c = " << c;
+  char c1 = 97;
+  cout << "c = " << c << "  c1 = " << (int)c1 << " ";
   signed char sc = 'a' + 1;
   cout << "   sc = 'a' + 1 = " << sc;
   unsigned char uc = 'b' - 1;
   cout << "   uc = 'b' - 1 = " << uc << endl;
 
-  (CHAR_MAX == UCHAR_MAX) ? printf("This machine uses unsigned char by default\n") :
-  printf("This machine uses signed char by default\n");
-  cout << end;
+  (CHAR_MAX == UCHAR_MAX) ? printf("This compiler uses unsigned char by default\n") :
+  printf("This compiler uses signed char by default\n");
+  //cout << end;
 
   // 2 байта = 16 бит
   cout << "sizeof(short) = " << sizeof(short) <<
@@ -85,7 +86,7 @@ void ints() {
   // В GNU C++ для совместимости:
   //   #define __int64 long long
   cout << "sizeof(__int64) = " << sizeof(__int64) << "   ";
-  __int64 ll1 = 123456789012345678LL; // LL
+  __int64 ll1 = 2147483647LL + 1;// 123456789012345678LL; // LL
   signed __int64 sll1 = 121;
   unsigned __int64 ull1 = 121;
   cout << "ll1 = " << ll1 << " " << sll1 << " " << ull1;
@@ -107,6 +108,7 @@ void floats() {
   // === Действительные числа ===
   show(2 + 2);
   show(sizeof(float));
+  // 0.10101111111 * 2^(101110101)
   cout << "sizeof(float)" << " = " << sizeof(float) << "   ";
   show(FLT_MIN);
   show(FLT_MAX);
