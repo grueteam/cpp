@@ -1,3 +1,4 @@
+//-->
 #include <iostream>
 #include <clocale>
 
@@ -16,7 +17,7 @@ int main() {
   int num;
 
   // Цикл с постусловием
-  // repeat until()
+  // Аналог repeat until в Delphi
   do {
     // Тело цикла
     cout << "Введите число: ";
@@ -31,3 +32,4 @@ int main() {
 
   return 0;
 }
+//<--
