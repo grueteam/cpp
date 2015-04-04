@@ -1,6 +1,8 @@
 #include <iostream>
 #include <math.h>
 
+const double EPS = 1e-9;
+
 using namespace std;
 
 int main() {
@@ -8,34 +10,36 @@ int main() {
 
   cout << "ax^2 + bx + c = 0;" << endl;
 
-  cout << "Enter a:";
+  cout << "Enter a: ";
   cin >> a;
 
-  cout << "Enter b:";
+  cout << "Enter b: ";
   cin >> b;
 
-  cout << "Enter c:";
+  cout << "Enter c: ";
   cin >> c;
 
   if (a != 0) {
     d = (b * b) - (4 * a * c);
     cout << "D = " << d << ";" << endl;
 
-    if (d < 0)
+    if (d < EPS)
       cout << "No solutions";
-    else if (d > 0) {
-      x1 = ((-1) * b - sqrt(d)) / (2 * a);
-      x2 = ((-1) * b + sqrt(d)) / (2 * a);
+    else if (d > EPS) {
+      x1 = (-b - sqrt(d)) / (2 * a);
+      x2 = (-b + sqrt(d)) / (2 * a);
       cout << "x1 = " << x1 << ";" << endl;
       cout << "x2 = " << x2 << ";";
     } else {
-      x1 = (-1 * b) / (2 * a);
+      x1 = (-b) / (2 * a);
       cout << "x = " << x1 << ";";
     }
   }
 
   else
     cout << "error";
+
+  // TODO: когда a = 0 тоже можно обработать
 
   return 0;
 }
