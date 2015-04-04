@@ -34,12 +34,50 @@ if(a != b){ cout << __LINE__ << " " << #a << "=" << a << " != " << #b << "=" << 
 assert(c != NULL);
 .\01_queue\main.cpp
 Очередь
+-------
+На базе массива.
+
 -------------------------------
 <-|  |  |  |  |  |  |  |  |  |  | <-
 -------------------------------
-Добавить элемент в конец очереди
-tail++
-Получить значение из начала очереди
+``` cpp
+const int QUEUE_LEN = 10000;
+
+int data[QUEUE_LEN];
+
+int head = 0; // Индекс первого элемента очереди
+int tail = 0; // Индекс первой свободной ячейки очереди
+
+// Добавить элемент в конец очереди
+void put(int value) {
+  cout << "put(" << value << ")" << endl;
+  data[tail++ % QUEUE_LEN] = value;
+  // tail++
+}
+
+// Получить значение из начала очереди
+int get() {
+  return data[head++ % QUEUE_LEN];
+}
+
+bool isEmpty(){
+  return head <= tail;
+}
+
+int main() {
+  // Положить в очередь
+  for(int i = 1; i <= 7; i++)
+    put(i);
+
+  // Извлекаем из очереди
+  while(!isEmpty()){
+    cout << "get() -> " << get() << endl;
+  }
+
+  return 0;
+}
+```
+
 .\02_malloc_free\main.c
 Отводим память
 Памяти не хватило
@@ -439,10 +477,10 @@ struct Point {
 SetConsoleCP(1251); // Ввод с консоли в кодировке 1251
 SetConsoleOutputCP(1251); // Вывод на консоль в кодировке 1251.
 ``` cpp
-     char str[10]; // Строка до 9 символов, последний символ 0
+  char str[10]; // Строка до 9 символов, последний символ 0
 
-      cout << "Введите строку больше 10 символов: ";
-      cin >> str;
+  cout << "Введите строку больше 10 символов: ";
+  cin >> str;
 
   freopen("result.txt", "w", stdout);
   cout << str << endl;
