@@ -27,14 +27,25 @@ int ff() {
 //-->
 int f() {
   int x = 10; // в стеке
+  x++;
   f();
 }
 //<--
 
 int main() {
-  // *Динамическая*: new / delete, [m/c]alloc / free
-  //-->
+  int hh = 10;
+  {
+    int a[100]; // <-- создан в стеке
 
+  } // <-- удалён из стека
+  // *Динамическая*: new / delete, [m/c]alloc / free
+  // КУЧА / HEAP
+  //-->
+  int N; // = 100;
+  int* p = new int[N];
+  p[10] = 1;
+  delete[] p;
+  //p[10] =
   //<--
   return 0;
 }

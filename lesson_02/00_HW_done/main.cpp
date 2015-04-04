@@ -11,15 +11,25 @@
 // a*x^2 + b*x + c = 0
 #include <iostream>
 #include <cmath>
+#include <cstdlib>
 
 using namespace std;
 
+//#ifdef DEBUG
+#define SHOW(x) cout << #x << " = " << x << endl;
+//#else
+//#define SHOW(x)
+//#endif // DEBUG
+
+//-->
 // Точность сравнения с нулём
 const double EPS = 1e-10;
+//<--
 
 // Функция: решение квадратного уравнения
 //   a,b,c - коэффициенты уравнения
 //   результат функция выводит на экран
+//-->
 void solve_equation(double a, double b, double c) {
   if(fabs(a) < EPS) {
     if(fabs(b) < EPS) {
@@ -47,7 +57,17 @@ void solve_equation(double a, double b, double c) {
   // Вычисление дискриминанта
   double D = b * b - 4 * a * c;
 
-  if(fabs(D) < EPS) {
+  if((fabs(D) < EPS) && (D != 0)) {
+    SHOW(a)
+    SHOW(b)
+    SHOW(c)
+    cout << "FIND IT! :)" << endl;
+    system("pause");
+  }
+
+  cout << "D = " << D << endl;
+
+  if(fabs(D) == EPS) {
     double x = -b / (2 * a);
     cout << "x = " << x << endl;
     // Проверяем полученный x
@@ -74,21 +94,33 @@ void solve_equation(double a, double b, double c) {
   cout << "f(x1) = " << a* x1* x1 + b* x1 + c << endl;
   cout << "f(x2) = " << a* x2* x2 + b* x2 + c << endl;
 }
+//<--
 
 // Основная программа - тестирование
 int main() {
-  // Коэффициенты квадратного уравнения
-  double a, b, c;
-  cout << "a = ";
-  cin >> a;
-  cout << "b = ";
-  cin >> b;
-  cout << "c = ";
-  cin >> c;
-  cout << endl;
+  //-->
+  while(1) {
+    // Коэффициенты квадратного уравнения
+    double a = 2, b, c;
+    SHOW(a)
+    cout << "a = ";
+    cin >> a;
 
-  // Вызов функции решения квадратного уравнения
-  solve_equation(a, b, c);
+    if(!cin.good()) {
+      SHOW(a)
+      break;
+    }
+
+    cout << "b = ";
+    cin >> b;
+    cout << "c = ";
+    cin >> c;
+    cout << endl;
+
+    // Вызов функции решения квадратного уравнения
+    solve_equation(a, b, c);
+    //<--
+  }
 
   return 0;
 }
