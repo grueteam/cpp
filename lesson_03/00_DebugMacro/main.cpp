@@ -1,3 +1,5 @@
+// Макросы для отладки
+// -------------------
 #include <iostream>
 #include <cassert> // C++. Подключаем библиотеку для assert
 #include <assert.h> // C

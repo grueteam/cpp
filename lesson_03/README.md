@@ -30,6 +30,8 @@
 ------------------------------------
 
 .\00_DebugMacro\main.cpp
+Макросы для отладки
+-------------------
 if(a != b){ cout << __LINE__ << " " << #a << "=" << a << " != " << #b << "=" << b << endl; };
 assert(c != NULL);
 .\01_queue\main.cpp
@@ -60,7 +62,7 @@ int get() {
   return data[head++ % QUEUE_LEN];
 }
 
-bool isEmpty(){
+bool isEmpty() {
   return head <= tail;
 }
 
@@ -70,29 +72,166 @@ int main() {
     put(i);
 
   // Извлекаем из очереди
-  while(!isEmpty()){
+  while(!isEmpty())
     cout << "get() -> " << get() << endl;
-  }
 
   return 0;
 }
 ```
 
 .\02_malloc_free\main.c
-Отводим память
-Памяти не хватило
-Освобождение памяти
+Динамическая память: malloc / free
+----------------------------------
+``` cpp
+  int* intArray;
+  // Отводим память
+  intArray = malloc(100);
+
+  if(intArray == NULL) {
+    // Памяти не хватило
+    printf("No memory :(");
+    return;
+  }
+
+  intArray[0] = 10;
+
+  // Освобождение памяти
+  free(intArray);
+```
+
 .\04_inherit\main.cpp
-privateA = 1; // Невозможно
-b1.forChilds = 5;
+Наследование и уровни доступа
+-----------------------------
+``` cpp
+class A {
+ public: // Доступно всем
+  int a;
+ protected: // Доступно себе и наследникам
+  int forChilds;
+ private:  // Доступно только мне
+  int privateA;
+};
+
+class B : public A {
+ public:
+  int a;
+  int b;
+  void method1() {
+    a = 1;
+    b = 2;
+    forChilds = 10;
+    A::a = 10;
+    B::a = 11;
+    // privateA = 1; // Невозможно
+  }
+};
+
+class C : public B {
+ public:
+  int c;
+};
+
+int main() {
+  A a1, a2;
+  a1.a = 1;
+  B b1;
+  b1.a = 2;
+  b1.b = 3;
+  //b1.forChilds = 5;
+
+  return 0;
+}
+```
+
 .\04_static_stack\main.c
-int localArray[100];
-Динамическая память
+Виды памяти
+-----------
+``` cpp
+int data[100000000]; // Статическая память
+
+void f(int N) { // Стек
+  //int localArray[100];
+  printf("f(%d)\n", N);
+  f(N + 1);
+}
+
+int main() {
+  int data2[100000]; // Стек
+  int i;
+  f(1);
+
+  for(i = 0; i < 4000; i++) {
+    // Динамическая память
+    if(malloc(1000000) == NULL) {
+      printf("NULL\n");
+      break;
+    }
+
+    printf("i = %d\n", i);
+  }
+
+  return 0;
+}
+```
+
 .\05_Assert\main.cpp
+Утверждения: assert
+-------------------
+Разработка через тестированиe
+(TDD - Test Driven Development).
+``` cpp
+long long fact(int n) {
+  assert(n >= 1);
+
+  if(n >= 3)
+    return n * fact(n - 1);
+
+  return n;
+}
+```
+
+``` cpp
+  assert( fact(1) == 1 );
+  assert( fact(2) == 2 );
+  assert( fact(3) == 1 * 2 * 3 );
+  assert( fact(4) == 1 * 2 * 3 * 4 );
+  assert( fact(5) == 1 * 2 * 3 * 4 * 5 );
+  fact(0);
+
+  int N;
+  cin >> N;
+  cout << "fact(" << N << ") = " << fact(N) << endl;
+
+  return 0;
+```
+
 .\05_StackDemo\main.cpp
-Текущий размер стека
-Положить данные на вершину стека
-Забрать данные с вершины стека
+``` cpp
+class Stack {
+  const static int STACK_SIZE = 100;
+  int data[STACK_SIZE];
+  // Текущий размер стека
+  int count = 0;
+ public:
+  // Положить данные на вершину стека
+  void push(int value) {
+    if(count == STACK_SIZE) {
+      cout << "Stack is full!" << endl;
+      return;
+    }
+    data[count++] = value;
+  }
+  // Забрать данные с вершины стека
+  int pop() {
+    if(count == 0) {
+      cout << "Stack is empty!" << endl;
+      return -1;
+    }
+    return data[--count];
+  }
+};
+```
+
 .\05_inherit_sameName\main.cpp
 .\05_new_delete\main.cpp
 Отводим динамическую память

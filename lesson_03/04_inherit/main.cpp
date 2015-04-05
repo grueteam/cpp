@@ -1,7 +1,10 @@
+// Наследование и уровни доступа
+// -----------------------------
 #include <iostream>
 
 using namespace std;
 
+//-->
 class A {
  public: // Доступно всем
   int a;
@@ -40,3 +43,4 @@ int main() {
 
   return 0;
 }
+//<--

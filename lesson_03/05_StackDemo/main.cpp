@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//-->
 class Stack {
   const static int STACK_SIZE = 100;
   int data[STACK_SIZE];
@@ -27,7 +28,7 @@ class Stack {
     return data[--count];
   }
 };
-
+//<--
 
 int main() {
   Stack s;

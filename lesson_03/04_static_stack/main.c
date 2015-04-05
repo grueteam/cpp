@@ -1,9 +1,12 @@
+// Виды памяти
+// -----------
 #include <stdio.h>
 #include <stdlib.h>
 
+//-->
 int data[100000000]; // Статическая память
 
-void f(int N) {
+void f(int N) { // Стек
   //int localArray[100];
   printf("f(%d)\n", N);
   f(N + 1);
@@ -24,6 +27,6 @@ int main() {
     printf("i = %d\n", i);
   }
 
-  printf("Hello world!\n");
   return 0;
 }
+//<--

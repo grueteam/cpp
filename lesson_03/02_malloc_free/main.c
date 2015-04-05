@@ -1,7 +1,10 @@
+// Динамическая память: malloc / free
+// ----------------------------------
 #include <stdio.h>
 #include <stdlib.h>
 
 int main() {
+  //-->
   int* intArray;
   // Отводим память
   intArray = malloc(100);
@@ -16,6 +19,7 @@ int main() {
 
   // Освобождение памяти
   free(intArray);
+  //<--
 
   return 0;
 }
