@@ -44,6 +44,7 @@ struct B : public A {
 };
 //<--
 
+//
 struct C : protected B {
   int c;
   void doC() {
@@ -68,7 +69,6 @@ struct D : public C {
   }
 };
 
-// Множественное наследование
 class E : public D {
   void doE() {
   }
@@ -80,6 +80,7 @@ class L {
   }
 };
 
+// Множественное наследование
 class X : public E, private L {
   void doX() {
     L::doL();
