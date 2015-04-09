@@ -6,6 +6,7 @@
 
 using namespace std;
 
+//-->
 #define MY_DEBUG
 
 #define SHOW(x) cout << __FILE__ << ":" << __LINE__ << " " << #x << " = " << x << endl;
@@ -18,6 +19,7 @@ using namespace std;
 
 #define ASSERT_EQ(a,b) ((a == b) ? (void)0 : _assert(#a" != "#b, __FILE__, __LINE__))
 //if(a != b){ cout << __LINE__ << " " << #a << "=" << a << " != " << #b << "=" << b << endl; };
+//<--
 
 int main() {
   int i = 324;
@@ -28,7 +30,7 @@ int main() {
   assert(2 * 2 == 4);
 
   char* c = NULL; //new
-  // assert(c != NULL);
+  assert(c == NULL);
 
   ASSERT_EQ(2 * 2 + 4, 5 - 1);
 
