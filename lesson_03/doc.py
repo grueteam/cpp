@@ -25,6 +25,7 @@ def parse(file_name):
     :param file_name: имя файла
     :return:
     """
+    if "_cp866" in file_name: return
     code = False
     with open(file_name, "r", encoding="utf-8-sig") as f:
         for line in f:
