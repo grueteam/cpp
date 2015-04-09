@@ -3,6 +3,7 @@ import os
 import sys
 
 PREFIX = u'//'
+PREFIX = u'///'
 
 sys.stdout = open("README.md", "w", encoding="utf-8")
 
