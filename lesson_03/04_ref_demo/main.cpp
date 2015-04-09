@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//-->
 void f1(int value) {
   value++;
   cout << "f1 = " << value << endl;
@@ -54,3 +55,4 @@ int main() {
 
   return 0;
 }
+//<--
