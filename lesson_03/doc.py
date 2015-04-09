@@ -69,6 +69,7 @@ for root, dirs, files in os.walk("."):
 
 for file_name in sorted(all_files):
     print(file_name)
+    print()
     # Markdown файлы просто передаём на выход не меняя
     if get_extension(file_name).lower() == ".md":
         for line in open(file_name, 'r', encoding="utf-8"):
