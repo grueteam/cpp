@@ -6,8 +6,8 @@
 int main() {
   //-->
   int* intArray;
-  // Отводим память
-  intArray = malloc(100);
+  intArray = malloc(100); // Отводим память - 100 байт
+  intArray = malloc(70 * sizeof(int)); // 70 целых чисел
 
   if(intArray == NULL) {
     // Памяти не хватило
