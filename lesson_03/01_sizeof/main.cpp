@@ -38,15 +38,18 @@ struct TwoPointer {
   OneChar* pointer2;
 };
 
+// Плотная упаковка - без выравнивания
+#pragma pack(push, 1) // exact fit - no padding
 struct TwoPointerPacked {
   OneChar* pointer;
   char c;
   OneChar* pointer2;
-} __attribute__((packed));
+}; // __attribute__((packed));
+#pragma pack(pop)
 
 int main() {
   int i = 1;
-
+  X(i);
   X(char);
   X(short);
   X(int);

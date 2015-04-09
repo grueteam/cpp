@@ -160,6 +160,7 @@ long long fact(int n) {
 
 .\01_sizeof\main.cpp
 
+Плотная упаковка - без выравнивания
 .\01_task_rec\main.cpp
 
 Строка в C
@@ -259,11 +260,11 @@ int main() {
   int xx = d;
 
   // Явное приведение типов
-  int *iPtr = (int *)l;
+  int* iPtr = (int*)l;
 
   //iPtr = static_cast<int *>(l);
   //iPtr = dynamic_cast<int *>(l);
-  iPtr = reinterpret_cast<int *>(l);
+  iPtr = reinterpret_cast<int*>(l);
 ```
 
 .\02_references\main.cpp
@@ -275,7 +276,7 @@ int main() {
 ``` cpp
 void f(int*);
 
-void f(int* a){
+void f(int* a) {
   *a = 10;
 }
 
@@ -292,13 +293,13 @@ int main() {
   SHOW(a);
   // Перемещаем указатель
   // теперь он будет указывать на aa
-  aPtr = (int *) aa;
+  aPtr = (int*) aa;
   // *aPtr = 1000; -- пишем в неведомую ячейку
   aPtr = &aa;
   *aPtr = 1000;
   SHOW(aa);
 
-  int *bPtr, c;
+  int* bPtr, c;
 
   int& b = a; // Ссылка
   //int &bb;  // error: 'bb' declared as
@@ -330,19 +331,25 @@ int main() {
 
 .\03_var_reference\main.cpp
 
-Значение / ссылка / указатель
------------------------------
-* **__FUNCTION__** - имя текущей функции
-* **__FILE__** - имя текущего файла
-* **__LINE__** - номер текущей строки
+/ Значение / ссылка / указатель
+/ -----------------------------
+/ * **__FUNCTION__** - имя текущей функции
+/ * **__FILE__** - имя текущего файла
+/ * **__LINE__** - номер текущей строки
+/ Усовершенствованный макрос **SHOW**
+``` cpp
+#define SHOW(x) cout << __FUNCTION__ << ":" << \
+                     __LINE__ << " " << #x << " = " << x << endl;
+```
+
 Передача параметров в функции
 ``` cpp
 // По значению
 void f1(int i) {
   SHOW(i)
   i++; // i - это уже другая переменная
-    // значение копируется из внешней i
-    // i - локальная переменная
+  // значение копируется из внешней i
+  // i - локальная переменная
   SHOW(i) // i = 1
 }
 
@@ -385,7 +392,7 @@ int main() {
 .\04_ref_demo\main.cpp
 
 ``` cpp
-void inc2(int &value){
+void inc2(int& value) {
   value += 2;
 }
 
@@ -411,7 +418,8 @@ int main() {
   ptrA = &d;
 
   int x = 1, y = 10;
-  inc2(x); inc2(y);
+  inc2(x);
+  inc2(y);
 
   return 0;
 }
@@ -537,8 +545,10 @@ union InMemoryPresentation {
       // Вырезаем b-ый бит
       cout << ((byte >> b) & 1);
     }
+
     cout << endl;
   }
+
 ```
 
 Для intel-совместимых процессоров
@@ -612,7 +622,7 @@ struct MyStruct {
 int main() {
   // Отводим динамическую память
   MyStruct* p = new MyStruct;
-   // p - указатель на динамическую память
+  // p - указатель на динамическую память
 
   // Освобождаем динамическую память
   delete p; // new без скобок, delete без скобок
@@ -623,7 +633,8 @@ int main() {
   // Освобождаем память
   delete[] intArray; // освобождаем со []
 
-  int **array2D = new int*[100];
+  int** array2D = new int* [100];
+
   for(int i = 0; i < 100; ++i)
     array2D[i] = new int[100];
 
@@ -632,13 +643,17 @@ int main() {
 
   for(int i = 0; i < 100; ++i)
     delete[] array2D[i];
+
   delete[] array2D;
 
-  int *array2Dx[100];
+  int* array2Dx[100];
+
   for(int i = 0; i < 100; ++i)
     array2Dx[i] = new int[100];
+
   // Используем
   array2Dx[1][3] = 100;
+
   // Очищаем память
   for(int i = 0; i < 100; ++i)
     delete[] array2Dx[i];
@@ -746,9 +761,10 @@ void deleteFirst() {
 
 void showList() {
   cout << "List: " << endl;
+
   for(ListElement* curElement = root;
-    curElement != NULL;
-    curElement = curElement->next)
+      curElement != NULL;
+      curElement = curElement->next)
     cout << curElement->value << endl;
 }
 
@@ -1050,7 +1066,7 @@ Point p[140];
 Класс = данные + методы работы
 ``` cpp
 class Point2D {
- public:
+public:
   double x, y;
 
   void move(double dx, double dy) {
@@ -1114,978 +1130,6 @@ int main() {
   delete[] pp;
 
   return 0;
-}
-```
-
-.\12_StackDemo\main.cpp
-
-``` cpp
-class Stack {
-  const static int STACK_SIZE = 100;
-  int data[STACK_SIZE];
-  // Текущий размер стека
-  int count = 0;
- public:
-  // Положить данные на вершину стека
-  void push(int value) {
-    if(count == STACK_SIZE) {
-      cout << "Stack is full!" << endl;
-      return;
-    }
-
-    data[count++] = value;
-  }
-  // Забрать данные с вершины стека
-  int pop() {
-    if(count == 0) {
-      cout << "Stack is empty!" << endl;
-      return -1;
-    }
-
-    return data[--count];
-  }
-};
-```
-
-.\12_vectors\main.cpp
-
-Конструктор - вызывается после создания объекта в памяти
-Деструктор - вызывается перед удалением объекта из памяти
-Конструктор копирования
-.\13_constructor_destructor\main.cpp
-
-Конструкторы и деструкторы
---------------------------
-``` cpp
-// struct - С
-// class - С++
-
-// Ключевое слово class
-// Имя_класса
-class MyClass {
-  // Количество объектов
-  static int count;
-  // Идентификатор данного объекта
-  int id;
-  int* data;
- public:
-  // Конструктор
-  MyClass();
-  // Деструктор
-  ~MyClass();
-};
-
-// Инициализация static-переменной
-int MyClass::count = 0;
-
-MyClass::MyClass() {
-  count++;
-  id = count;
-  cout << "Constructor #" << id << endl;
-
-  data = new int[1000];
-  data[0] = 10;
-}
-
-MyClass::~MyClass() {
-  cout << "Destructor #" << id << endl;
-
-  cout << data << " " << data[0] << endl;
-  delete[] data;
-}
-
-struct A {
-  int w;
-  A(int v) {
-    w = v;
-  }
-};
-```
-
-.\14_copy_contructor\main.cpp
-
-Конструктор копирования
------------------------
-``` cpp
-// Класс "строка"
-class string {
-  static int count; // Количество строк
-  char*    Str;
-  int     size;
- public:
-  int id; // Идентификатор данной строки
-  string(string&); // Конструктор копирования
-  // Конструктор
-  string(const char* str) {
-    id = ++count;
-    std::cout << "Constructor #" << id << " \"" << str << "\"" << std::endl;
-    size = strlen(str); // "ABC\0"
-    Str = new char[size + 1];
-    strcpy(Str, str);
-  };
-  // Вывод строки на экран
-  void show() {
-    std::cout << Str << std::endl;
-  }
-  // Деструктор
-  ~string() {
-    std::cout << "Destructor #" << id << std::endl;
-    delete[] Str; // Очищаем динамическую память
-  }
-  // Перегрузка операции присваивания
-  string& operator=(string& right) {
-    if(Str != NULL)
-      delete[] Str;
-
-    std::cout << "= #" << id << std::endl;
-    // if(Str != NULL)
-    //   delete[] Str;
-    Str = new char[right.size + 1];
-    size = right.size;
-    strcpy(Str, right.Str);
-  }
-};
-
-// Конструктор копирования
-// Создает копии динамических переменных и ресурсов
-string::string(string& x) {
-  id = ++count;
-  std::cout << "Copy constructor #" << id << std::endl;
-  // if(Str != NULL)
-  //   delete[] Str;
-  Str = new char[x.size + 1];
-  size = x.size;
-  strcpy(Str, x.Str);
-}
-
-int string::count = 0;
-```
-
-.\15_ListExample\main.cpp
-
-Один элемент списка
-следующий элемент списка
-Список целиком, с всеми операциями
-Указатель на первый элемент списка
-ListElement *root = NULL;
-Конструктор - метод, который вызывается
-при создании объекта (экземпляра класса)
-NULL - означает что нет ни одного элемента в списке
-Деструктор (очистка памяти)
-Запоминаем 2-ой элемент списка
-(следующий после первого элемента)
-Удаляем первый элемент списка
-delete:
-1. Вызывается деструктор (если есть)
-2. Освобождается динамическая память
-Показать список
-cur->value <-> (*cur).value
-Добавить элемент в начало
-Заводим новый элемент в динамической памяти
-Заполняем новый элемент
-Подвешиваем к новому элементу старый список
-Теперь root должен ссылаться на новый элемент
-Добавить элемент в конец
-Если список пуст, то добавить в конец
-это то же что и добавить в начало
-Ищем последний элемент
-Убеждаемся в том, что это последний элемент
-списка
-Заводим новый элемент
-Подвешиваем новый элемент в конец списка
-.\16_inherit\00_intro.md
-
-﻿Наследование и уровни доступа
------------------------------
-
-
-.\16_inherit\main.cpp
-
-Наследование и уровни доступа
------------------------------
-**Наследование** - способность производного класса
-наследовать характеристики существующего базового класса
-``` cpp
-class A {
- public: // Доступно всем
-  int a;
- protected: // Доступно себе и наследникам
-  int forChilds;
- private:  // Доступно только мне
-  int privateA;
-};
-
-class B : public A {
- public:
-  int a;
-  int b;
-  void method1() {
-    a = 1;
-    b = 2;
-    forChilds = 10;
-    A::a = 10;
-    B::a = 11;
-    // privateA = 1; // Невозможно
-  }
-};
-
-class C : public B {
- public:
-  int c;
-};
-
-int main() {
-  A a1, a2;
-  a1.a = 1;
-  B b1;
-  b1.a = 2;
-  b1.b = 3;
-  //b1.forChilds = 5;
-
-  return 0;
-}
-```
-
-.\16_inherit_sameName\main.cpp
-
-Наследование: поле с тем же имененем
-------------------------------------
-Пусть есть класс **A**
-с полем **x** и методом **show**
-``` cpp
-class A {
- public:
-  int x = -1;
-  void show() {
-    cout << "x = " << x << endl;
-  }
-};
-```
-
-И его наследник **B**
-тоже с полем **x** и методом **show**
-``` cpp
-class B : public A {
- public:
-  int x = -2;
-  void show() {
-    A::x++;
-    cout << "A::x = " << A::x << endl;
-    cout << "B::x = " << B::x << endl;
-  }
-};
-```
-
-Как получить доступ к каждому из полей **x**?
-``` cpp
-int main() {
-  A a;
-  B b;
-  a.x = 1;
-  a.show();
-  b.x = 2;
-  b.show();
-  return 0;
-}
-```
-
-.\17_inherit\main.cpp
-
-Наследование
-------------
-struct A <--> class A { public:
-class A <--> struct A { private:
-``` cpp
-struct A {
-  static int staticInClass;
-  int a; // Поле доступно отовсюду
-
-  void doA() {
-    cout << "doA()" << endl;
-    onlyInA = 2;
-    cout << "onlyInA = " << onlyInA << endl;
-    forChilds = 10;
-  };
- private:
-  int onlyInA; // Только внутри класса A
- protected:
-  int forChilds; // Внутри класса A и в наследниках
-};
-```
-
-B - наследник A
-``` cpp
-struct B : public A {
-  int b;
-  int forChilds; // Поле с тем же именем
-  void doB() {
-    cout << "doB()" << endl;
-    //onlyInA = 2; // Недоступно в наследниках
-    doA();
-    //cout << "onlyInA = " << onlyInA << endl;
-    A::forChilds = 12;
-    forChilds = 20; // Работает
-    this->forChilds = 20; // Работает
-
-    cout << "A::forChilds = " << A::forChilds << endl;
-    cout << "B::forChilds = " << B::forChilds << endl;
-  };
-};
-```
-
-
-Множественное наследование
-show(); // Ошибка компиляции
-Мы должны явно указать из какого предка вызываем метод
-потому что это глобальная переменная
-a.onlyInA = 3; // 'int A::onlyInA' is private
-'int A::forChilds' is protected
-cout << a.forChilds << endl;
-Нет доступа, т.к. onlyInA private
-b.onlyInA = 10;
-c.a = 1; // Ошибка из-за protected наследования
-c.b = 2; // Ошибка из-за protected наследования
-c.doA();
-c.doB();
-x.doL();
-.\18_polymorph\main.cpp
-
-``` cpp
-// Фигура
-struct Shape {
-  //virtual void show(){
-  //  cout << "Shape" << endl;
-  //};
-  virtual void show() = 0; // Абстрактный метод
- protected:
-  // virtual void doA() = 0;
-  // virtual void doB() = 0;
-  // virtual void doC() = 0;
-  // virtual void doD() = 0;
-  // virtual void doE() = 0;
-  //int x;
- private:
-  char c1;
-  char c2;
-  char c3;
-  char c4;
-  char c5;
-} __attribute__((packed));
-```
-
-Квадрат
-``` cpp
-struct Square : public Shape {
-  double side;
-  Square(double s) : side(s) { }
-  void show() {
-    cout << "Square side = " << side << endl;
-  }
-};
-```
-
-Прямоугольник
-``` cpp
-struct Rectangle : public Shape {
-  double height, width;
-  Rectangle(double h, double w) :
-    height(h), width(w) { }
-  void show() {
-    cout << "Rectangle " << height <<
-         " x " << width << endl;
-  }
-};
-```
-
-``` cpp
-int main() {
-  // Shape shape; // Ошибка компиляции
-  cout << sizeof(Shape) << endl;
-  Shape* s[] = {
-    new Square(10),
-    new Rectangle(2, 3),
-    new Square(15),
-    // new Shape(),
-  };
-
-  for(int i = 0; i < 3; ++i)
-    s[i]->show();
-
-  return 0;
-}
-```
-
-.\19_setter_getter\main.cpp
-
-``` cpp
-struct A {
- private:
-  int a;
-
- public:
-  A() {
-    a = 33;
-  }
-
-  // setter - метод для установки значения поля
-  void setA(int value) {
-    cout << "a = " << value << endl;
-    a = value;
-  }
-  // getter - метод для получения значения поля
-  int getA() {
-    return a;
-  }
-};
-
-
-int main() {
-  A a1; // A - класс, a1 - объект
-  a1.setA(20);
-  cout << a1.getA() << endl;
-  return 0;
-}
-```
-
-.\20_getter_setter_square\main.cpp
-
-Зачем нужны get/set методы?
----------------------------
-Don’t Repeat Yourself
-http://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself
-.\20_getter_setter_square\square.cpp
-
-side = sqrt(value);
-.\20_getter_setter_square\square.h
-
-Инкапсуляция
-private: // Инкапсуляция
-double side;
-Получить сторону квадрата
-return side;
-Задать сторону квадрата
-side = value;
-Получить площадь
-return side*side;
-Задать площадь
-.\21_task_rational\main.cpp
-
-Перегрузка операторов в C++. Вывод в поток
-------------------------------------------
-**Оператор в C++** - это некоторое действие или функция обозначенная специльным символом (символами).
-Чтобы распространять действие операторов на новые (свои) типы данных в C++ их можно перегружать.
-Для перегрузки используется ключевое слово **operator** вместе с прототипом и объявлением функции.
-Практика: класс "рациональная дробь"
-------------------------------------
-Сокращение типа
-``` cpp
-typedef long long ll;
-```
-
-НОД - Наибольший общий делитель.
-GCD - Greatest common divisor.
-``` cpp
-long GCD(long a, long b) {
-  return (b == 0) ? a : GCD(b, a % b);
-}
-```
-
-``` cpp
-// Рациональная дробь: p/q
-class Rational {
-  long p, q; // p - числитель, q - знаменатель
-  // Сокращение дроби
-  void normalize() {
-    long d = GCD(p, q); // Вычисляем наибольший общий делитель
-    p /= d; // делим на него числитель
-    q /= d; // делим на него знаменатель
-  }
-  void show(ostream& os) const {
-    // Сокращаем дробь если надо
-    long d = GCD(p, q); // Вычисляем наибольший общий делитель
-    long px = p / d; // делим на него числитель
-    long qx = q / d; // делим на него знаменатель
-
-    if(qx < 0) {
-      px = -px;
-      qx = -qx;
-    }
-
-    // Если знаменатель равен 1
-    // то это целое число
-    if(qx == 1)   // Условие (1)
-      os << px << endl;
-    else {
-      // Целая часть
-      long whole = px / qx;
-
-      if(whole != 0)
-        os << whole << " ";
-      else if(px < 0)
-        os << "-";
-
-      px -= whole * qx;
-      px = abs(px);
-      assert(px > 0);
-      // Если число целое, то должно было сработать
-      // первое условие (1)
-      assert(px % qx != 0);
-      os << px << "/" << qx << endl;
-    }
-  }
- public:
-  // TODO: Конструктор
-  Rational(long pi, long qi) :
-    p(pi), q(qi) {
-    assert(q != 0);
-    //if(q == 0){
-    //  cout << "q == 0" << endl;
-    //  halt(1);
-    //}
-  }
-  Rational(const char* message) {
-    cout << message << " ";
-    cout << "p = ";
-    cin >> p;
-    cout << "q = ";
-    cin >> q;
-    normalize();
-  }
-  // Показать дробь на экран (в консоль)
-  void show() {
-    show(cout);
-  }
-
-  // Сложение дробей
-  void add(Rational& right) {
-    //   p    right.p
-    //  --- + -------
-    //   q    right.q
-    p = p * right.q + right.p * q;
-    //  --------------------------
-    q =       q * right.q;
-
-    // Для предотвращения переполнений
-    normalize();
-  }
-
-  // a + b
-  const Rational operator+(Rational& right) {
-    Rational res = *this;
-    res.add(right);
-    return res;
-  }
-
-  Rational operator+(int right) {
-    Rational res = *this;
-    Rational r(right, 1);
-    res.add(r);
-    return res;
-  }
-
-  friend
-  Rational
-  operator+(long left, Rational& right) {
-    Rational res(left, 1);
-    res.add(right);
-    return res;
-  }
-
-  void sub(Rational& right) {
-    p = p * right.q - right.p * q;
-    //  --------------------------
-    q =       q * right.q;
-
-    normalize();
-  }
-
-  Rational operator-(Rational& right) {
-    Rational res = *this;
-    res.sub(right);
-    return res;
-  }
-
-  // Конструктор копирования
-  /* Rational(const Rational &r){
-     //cout << r.p << "/" << r.q << endl;
-     p = r.p;
-     q = r.q;
-     //cout << "Copy contructor " << p << "/" << q << endl;
-   } */
-
-  friend ostream& operator <<(ostream& os, const Rational& r) {
-    r.show(os);
-    return os;
-  }
-};
-
-#define SHOW(x) { cout << #x << " = " << (x) << endl; }
-
-int main() {
-  /* Rational x(3, 1);
-   x.show();
-
-   Rational y(6, 4);
-   y.show(); */
-
-  Rational aa(2, 6), bb(3, 6);
-  SHOW(aa);
-  SHOW(bb);
-  SHOW(aa - bb);
-
-  Rational a(4, 6), b(11, 2);
-  SHOW(a);
-  SHOW(b);
-  Rational c = a + b;
-  SHOW(c);
-  SHOW(a + b);
-  SHOW(a - b);
-  SHOW(a / b);
-  SHOW(a * b);
-  SHOW(a);
-  SHOW(b);
-
-  // Rational c = b + a;
-
-  int i = 2, j = 3;
-  int tt = i + j;
-  Rational c1 = i + b;
-
-  b.show();
-  c1.show();
-
-  Rational x(4, 6), y(1, 3);
-  x.add(y);
-  x.show();
-
-  Rational yy("Vvedite:");
-  yy.show();
-
-  return 0;
-}
-```
-
-.\22_this_demo\main.cpp
-
-Работа с this
--------------
-``` cpp
-class Boy;
-
-class Girl {
- public:
-  Boy* boy;
-  void reg(Boy* b) {
-    boy = b;
-  }
-  void answer();
-};
-
-class Boy {
- public:
-  Girl* girl;
-  void reg(Girl* g) {
-    girl = g;
-    girl->reg(this);
-  }
-  void dialog() {
-    cout << "Boy: hi!" << endl;
-    girl->answer();
-  }
-  void answer() {
-    cout << "Boy: I'm find! And how are you?" << endl;
-  }
-};
-
-void Girl::answer() {
-  cout << "Girl: Hi! How are you?" << endl;
-  boy->answer();
-}
-
-
-int main() {
-  Girl g;
-  Boy b;
-  b.reg(&g);
-
-  b.dialog();
-
-  return 0;
-}
-```
-
-.\23_diamond_inherit\main.cpp
-
-Diamond Inheritance
--------------------
-``` cpp
-//   A
-//  / \
-// B   C
-//  \ /
-//   D
-#include <iostream>
-
-using namespace std;
-
-struct X {
-  void show() {
-    cout << "X" << endl;
-  };
-};
-
-struct A {
-  char name;
-  A() : name('A') {};
-  virtual
-  void show() {
-    cout << "show_A " << name << endl;
-  };
-};
-
-struct B : virtual public A {
-  B() {
-    A::name = 'B';
-  };
-  void show() {
-    cout << "show_B " << name << endl;
-  };
-};
-
-struct C : virtual public A {
-  C() {
-    A::name = 'C';
-  };
-  void show() {
-    cout << "show_C " << name << endl;
-  };
-};
-
-struct D : public B, public C {
-  D() {
-    B::name = 'D';
-  };
-  void show() {
-    cout << "show_D " << B::name << endl;
-    B::show();
-    C::show();
-    C::A::show();
-    B::A::show();
-  };
-};
-
-int main() {
-  /*A a;
-  a.show();
-  B b;
-  b.show();
-  C c;
-  c.show(); */
-
-  D d;
-  d.show();
-
-  /*A* x[4] = {new A, new B, new C, new D};
-  for(int i = 0; i < 4; ++i)
-    x[i]->show();
-  */
-  // Полиморфизм
-  A* x[4] = { new B, new A, new C, new D };
-  /* A* x[4];
-   x[0] = new C;
-   x[1] = new B;
-   x[2] = new A;
-   x[3] = new D; */
-
-  cout << "sizeof(X) = " << sizeof(X) << endl;
-  cout << "sizeof(*X) = " << sizeof(X*) << endl;
-
-  cout << "+ VMT" << endl;
-  cout << "sizeof(A) = " << sizeof(A) << endl;
-  cout << "sizeof(*A) = " << sizeof(A*) << endl;
-
-  for(int i = 0; i < 4; ++i)
-    x[i]->show();
-
-  for(int i = 0; i < 4; ++i)
-    delete x[i];
-
-  return 0;
-}
-```
-
-.\25_iterator\main.cpp
-
-Итерируемся по set
-for(vector<int>)
-.\26_private_constructor_singletone\main.cpp
-
-Для чего использовать private-конструкторы?
--------------------------------------------
-Шаблон проектирования Singletone
-``` cpp
-// Создаем класс S
-// Задача: сделать чтобы в программе
-// был только один экземпляр этого класса
-// Singletone / Одиночка
-class S {
-  //private: // по-умолчанию и так private
-  static int count;
-  int id;
-  // private (частный) конструктор
-  S() {
-    count++;
-    id = count;
-    cout << "Constructor #" << id << endl;
-  }
-  // Один-единственный экземпляр класса S
-  static S* instance;
- public:
-  // Единственный способ получить экземпляр
-  // класса S - вызвать этот метод
-  static S& getInstance() {
-    if(instance == NULL)
-      instance = new S;
-
-    return *instance;
-  }
-  void show() {
-    cout << "S #" << id << endl;
-  }
-  ~S() {
-    cout << "Destructor: #" << id << endl;
-  }
-};
-
-int S::count = 0;
-S* S::instance = NULL;
-
-int main() {
-  //S s1;
-  //S *s = new S;
-  S a = S::getInstance(), b = S::getInstance();
-  a.show();
-  b.show();
-  S c = S::getInstance();
-  c.show();
-  return 0;
-}
-```
-
-.\27_string_overflow\main.cpp
-
-Переполнение строки
--------------------
-``` cpp
-union Bytes {
-  int i; // Тип int занимает 4 байта
-  char bytes[4]; // Он же в виде 4-х отдельных
-};
-```
-
-``` cpp
-struct Shape {
-  char type; // type = 'C' - круг, 'S' - квадрат
-  double x, y;
-  union {
-    double R;
-    double Side;
-  };
-};
-```
-
-``` cpp
-struct Point {
-  double x, y;
-
-  // Расстояние между точками
-  double dist(Point b) {
-    return sqrt(pow(x - b.x, 2) +
-                pow(y - b.y, 2));
-  }
-
-};
-```
-
-SetConsoleCP(1251); // Ввод с консоли в кодировке 1251
-SetConsoleOutputCP(1251); // Вывод на консоль в кодировке 1251.
-``` cpp
-  char str[10]; // Строка до 9 символов, последний символ 0
-
-  cout << "Введите строку больше 10 символов: ";
-  cin >> str;
-
-  freopen("result.txt", "w", stdout);
-  cout << str << endl;
-```
-
-.\28_Russian\README.md
-
-﻿Список всех поддерживаемых консолей?
-------------------------------------
-
-Unix / MacOS
-``` bash
-locale -a
-```
-
-.\28_Russian\c.cpp
-
-.\28_Russian\hw_cp866.c
-
-.\28_Russian\hw_cp866.cpp
-
-.\28_Russian\hw_utf8.cpp
-
-C++
-Вывод в консоль по-русски:
-``` cpp
-  system("chcp 65001");
-  SetConsoleOutputCP(CP_UTF8);
-  std::locale::global(std::locale ("en_US.UTF-8"));
-  printf("Это моя первая программа!\n");
-  cout << "Текст в UTF-8" << endl;
-  cout << "И он нормально читается в Windows-консоли!" << endl;
-```
-
-.\28_Russian\hw_utf8_2.cpp
-
-C++
-Вывод в консоль по-русски:
-``` cpp
-  //setlocale(LC_ALL, "Russian_Russia.65001");
-  setlocale(LC_ALL, "Russian.UTF-8");
-  //SetConsoleCP(CP_UTF8);
-  SetConsoleOutputCP(CP_UTF8);
-```
-
-.\28_Russian\show_cur_locale.cpp
-
-Получаем параметры текущей локали
-``` cpp
-#include <windows.h>
-#include <stdio.h>
-#include <iostream>
-
-using namespace std;
-
-int main() {
-  char language[256] = {0}, country[256] = {0};
-  GetLocaleInfo(
-    GetUserDefaultLCID(),
-    LOCALE_SENGLANGUAGE,
-    language, sizeof(language));
-  GetLocaleInfo(
-    GetUserDefaultLCID(),
-    LOCALE_SENGCOUNTRY,
-    country, sizeof(country));
-
-  UINT OEM_CP = GetOEMCP(); // Возвращает системную OEM кодовую страницу как число
-  // UINT ANSI_CP = GetANSICP();
-
-  printf("%s_%s %d\n", language, country, OEM_CP);
-
-  cout << language << "_" << country << "." << OEM_CP << endl;
 }
 ```
 
@@ -2153,8 +1197,6 @@ struct Queue {
   cout << "10 - " << q.get() << endl;
   cout << "14 - " << q.get() << endl;
   cout << "99 - " << q.get() << endl;
-```
-
 ```
 
 .\HomeWork\task.cpp

@@ -1,25 +1,8 @@
-.\000_intro.md
-﻿Template. Шаблонные функции. Стратегии
-======================================
-
-Обобщённое программирование
----------------------------
-
-Описание шаблона. Шаблонные функции (min, max и т.д.). Шаблонные классы
------------------------------------------------------------------------
-
-Контейнеры
-----------
-
-Стандартная библиотека шаблонов STL: контейнеры, итераторы, алгоритмы, адаптеры, функторы (vector, algorithm)
--------------------------------------------------------------------------------------------------------------
-
-
-.\00_class\main.cpp
-.\01_arrays_const\main.cpp
+.\!x\00_class\main.cpp
+.\!x\01_arrays_const\main.cpp
 Применение модификатора const в ООП
 Метод не модифицирует состояние объекта
-.\01_contructor_destructor\main.cpp
+.\!x\01_contructor_destructor\main.cpp
 Создание объекта
 1. Отводится память sizeof(размер_объекта)
 2. Присваиваются значения полям
@@ -29,11 +12,11 @@
 Уничтожение объекта
 1. Выполняется код деструктора
 2. Очищается память занятая объектом
-.\02_bitfields\main.cpp
+.\!x\02_bitfields\main.cpp
 cout
-.\02_copy_constructor\main.cpp
+.\!x\02_copy_constructor\main.cpp
 Конструктор копирования
-.\03_inheritance\main.cpp
+.\!x\03_inheritance\main.cpp
 до первого private наследования
 privateA = 2; // Недоступен
 т.к. private доступны только внутри класса
@@ -60,7 +43,7 @@ bPublic.privateA = 10; // Недоступно
 bPublic.protectedA = 10; // Недоступно
 bProtected.publicA = 111;
 C.publicA = 12;
-.\04_DoubleLinkedList\main.cpp
+.\!x\04_DoubleLinkedList\main.cpp
 Добавить элемент в начало списка
 Тот элемент, который раньше был первым
 теперь должен ссылаться на новый первый элемент
@@ -90,7 +73,7 @@ root должен указывать на второй
 Удаляем первый элемент
 Удаляем единственный элемент
 Удаляем последний элемент
-.\04_Shapes\main.cpp
+.\!x\04_Shapes\main.cpp
 Базовый класс: Фигура
 Имя фигуры (строка)
 Конструктор для вызова из наследников
@@ -102,7 +85,7 @@ root должен указывать на второй
 Одна точка и радиус
 Конструктор
 Везде метод show() -> показывает свойства фигуры
-.\06_Class_static\main.cpp
+.\!x\06_Class_static\main.cpp
 Ключевое слово: static -
 поле/метод относится к классу целиком
 а не к конкретному объекту.
@@ -119,27 +102,27 @@ root должен указывать на второй
 который вызывается прямо перед
 удалением объекта из памяти
 Инициализируем статическое поле класса
-.\06_polymorph\main.cpp
+.\!x\06_polymorph\main.cpp
 abstract
 interface  C# / Java
-.\07_inherit_simple\main.cpp
+.\!x\07_inherit_simple\main.cpp
 Класс A - предок класса B
 Класс B - наследник класса A
-.\07_poly_check\main.cpp
-.\08_inherit_2\main.cpp
+.\!x\07_poly_check\main.cpp
+.\!x\08_inherit_2\main.cpp
 B - наследует поля и методы и из A и из A2
 error: reference to 'x' is ambiguous|
 x = 2;
 Если уникальна
 Хоть var из A2 и не видно, всё равно надо
 указать класс
-.\08_inherit_order\main.cpp
+.\!x\08_inherit_order\main.cpp
 ..
 Квадрат - частный случай прямоугольника
-.\09_cout_my_class\main.cpp
+.\!x\09_cout_my_class\main.cpp
 os = cout - типа ostream
 Point = P
-.\09_private_public_protected\main.cpp
+.\!x\09_private_public_protected\main.cpp
 Только для "частного" использования
 т.е. внутри класса Base
 и в наследниках
@@ -151,10 +134,10 @@ privateVar = 122; // Недоступна
 base.privateVar = 1;
 pub.privateVar - недоступна
 p.publicVar = 11;
-.\10_public_protected_private_combinations\main.cpp
+.\!x\10_public_protected_private_combinations\main.cpp
 Доступны и x и y
-.\12_virtual\main.cpp
-.\13_InheritShapes\main.cpp
+.\!x\12_virtual\main.cpp
+.\!x\13_InheritShapes\main.cpp
 Фигура
 Название фигуры
 Цвет фигуры
@@ -169,7 +152,7 @@ p.publicVar = 11;
 Координаты центра
 Радиус окружности
 Shape s("222",3,3,3);
-.\14_template_in_template\main.cpp
+.\!x\14_template_in_template\main.cpp
 Шаблонная функция вычисления минимума
 Стек заданной длины
 T - тип элементов
@@ -186,8 +169,8 @@ Size - максимальное количество
 Взять из начала очереди
 TODO: Разобрать пример на следующем занятии
 Шаблонная функция для печати любой коллекции
-.\99_virtual\task1.cpp
-.\HomeWork\main.cpp
+.\!x\99_virtual\task1.cpp
+.\!x\HomeWork\main.cpp
 typedef long long ll;
 НОД - Наибольший общий делитель
 Рациональная дробь: p/q
@@ -208,7 +191,7 @@ cout - типа ostream
 stream - поток
 thread - поток/нить
 Rational c = b + a;
-.\PointStuct\main.cpp
+.\!x\PointStuct\main.cpp
 Точка
 Point(){};
 Отрезок
@@ -217,14 +200,14 @@ p2.x = x2;  p2.y = y2;
 Длина отрезка
 Point p(2,3);
 cout << "p.x = " << p.x << "  p.y = " << p.y << endl;
-.\StructNew\main.cpp
+.\!x\StructNew\main.cpp
 scanf("%s",c);
 for(int i = 20; i < 10000; i--)
 c[i] = 124;
-.\StructStaticCount\main.cpp
+.\!x\StructStaticCount\main.cpp
 ...
-.\TemplateFunction\main.cpp
-.\cont_textfiles\main.cpp
+.\!x\TemplateFunction\main.cpp
+.\!x\cont_textfiles\main.cpp
 Перевод
 Как ввести строку целиком?
 Как читать
@@ -246,22 +229,14 @@ cin.getline(phrase, strLen);
 cout << phrase << endl;
 Ищем слово из словаря в строке
 cout << inEnglish << " pos " << pos << endl;
-.\copy_constructor\main.cpp
+.\!x\copy_constructor\main.cpp
 потому что в строке символ 0 - окончание строки
 Создает копии динамических переменных и ресурсов
 SetConsoleCP(65001);
 SetConsoleOutputCP(65001);
 Добавить в конец кусок строки
 Строка должна стать "TestEnd" после этой операции
-.\homework.md
-﻿Домашнее задание: реализовать с использованием STL
---------------------------------------------------
-
-* Самое часто встречающееся число
-* Максимум в массиве
-* Переводчик текста на основе map
-
-.\map_dict\main.cpp
+.\!x\map_dict\main.cpp
 Контейнеры:
 vector
 set
@@ -271,15 +246,15 @@ A["Hi"] = "Привет";
 map<key, value>
 dict[3] = 4;
 dict[3] = 5;
-.\map_example\main.cpp
+.\!x\map_example\main.cpp
 Итератор в строке пробегает по буквам
 с первой буквы до последней по одной
 Очередная буква строки
 Не нашли букву => она первый раз
-.\memory_leaks\main.cpp
+.\!x\memory_leaks\main.cpp
 Утечки памяти
 -------------
 TODO: SmartPtr для обработки этой ситуации
 delete intArray;
 delete[] intArray;
-.\oop\main.cpp
+.\!x\oop\main.cpp
