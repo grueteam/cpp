@@ -321,9 +321,6 @@ x[0]
 Рекурсивный способ вычисления факториала
 Тестирование работы функции
 cout << i << "! = " << res << endl;
-.\06_var_reference\main.cpp
-По ссылке
-По указателю
 .\07_arrays\main.cpp
 Массивы
 Одномерные
@@ -514,6 +511,61 @@ TODO: реализовать
 Забрать значение и вернуть
 TODO: реализовать
 .\16_FileLog_DebugExample\main.cpp
+.\17_task_large_arrays\main.cpp
+``` cpp
+const int SIZE = 100000;
+
+// int A[]
+// int &A[]
+// /*, int arraySize*/ /* параметры */
+int arrayMax(int* A) {
+  // Предположим, что максимум это первый элемент
+  int curMax = A[0];
+  A[0] = -10; // Портим массив :)
+
+  // Пробежим по остальным элементам массива
+  // если какой-то элемент больше текущего
+  // максимума, то запомним новый текущий максимум
+  for(int i = 1; i < SIZE; ++i)
+    if(A[i] > curMax)
+      curMax = A[i];
+
+  cout << "A[0] = " << A[0] << endl;
+
+  return curMax;
+}
+
+int main() {
+  // Массив в стеке
+  int A[SIZE];
+
+  // Заполняем случайными числами
+  for(int i = 0; i < SIZE; ++i) {
+    A[i] = rand() % 10000;    // от 0 до 9999
+  }
+
+  A[0] = -1;
+  cout << "A[0] = " << A[0] << endl;
+
+  cout << "max = " << arrayMax(A) << endl;
+
+  cout << "A[0] = " << A[0] << endl;
+
+  return 0;
+}
+```
+
+.\18_cin_cout\main.cpp
+cin >> p1.x >> p1.y;
+cin.getline(str, 1024);
+Вывести на экран точку 1
+cin.clear();
+.\19_memory\main.cpp
+Заводим в динамической памяти массив из 100 элементов
+с типом int
+Удалили
+*(intPtr + 19*sizeof(int));
+.\20_not_init\main.cpp
 .\C_struct\main.c
 Структуры в чистом C
 cout << "(" << p.x << ";" << p.y << ") ";
@@ -601,7 +653,27 @@ setlocale(LC_ALL, "Russian.UTF-8");
 .\Uravnenie\main.cpp
 ----------------------------------------
 .\cpp_dynamic\main.cpp
-Заводим массив в динамической памяти
+delete и delete[]
+-----------------
+Пусть у нас есть структура
+``` cpp
+struct Point {
+  double x, y;
+};
+```
+
+``` cpp
+  // Заводим массив в динамической памяти
+  int* intArray;
+  intArray = new int[1000]; // new со скобками []
+  intArray[0] = 10;
+  intArray[1] = 23;
+  delete[] intArray; // И delete должен быть со скобками
+
+  Point* p = new Point;
+  delete p; // delete без скобочек []
+```
+
 .\factorial\main.cpp
 Без: using namespace std;
 Win1251 и в исходном тексте и в консоли
@@ -609,6 +681,22 @@ Win1251 и в исходном тексте и в консоли
 Функции
 ...
 using namespace my;
+.\homework.md
+Домашнее задание - рекурсия
+---------------------------
+  ЗАДАНИЕ:
+ Пользователь вводит натуральное число N.
+ Нужно вывести все способы разложить его на слагаемые.
+ Способы отличающиеся только
+ порядком слагаемых считаются одинаковыми.
+
+Например N = 4:
+* 4 = 4
+* 4 = 3 + 1
+* 4 = 2 + 2
+* 4 = 2 + 1 + 1
+* 4 = 1 + 1 + 1 + 1
+
 .\lesson2_eq\main.cpp
 a^=b^=a^=b; // XOR - исключающее или
 int g = f++ + f++ + f++;
