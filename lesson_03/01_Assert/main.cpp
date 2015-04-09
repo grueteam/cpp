@@ -18,32 +18,43 @@
 
 using namespace std;
 
-// Разрабатываем функцию вычисления факториала:
+// Разрабатываем функцию вычисления факториала.
+// Контракт - какие обязательства берёт на себя
+// вызывающая сторона.
 //-->
 long long fact(int n) {
-  assert(n >= 1);
+  assert(n >= 0); // Контракт
 
-  if(n >= 3)
-    return n * fact(n - 1);
+  if(0 == n)
+    return 1;
 
-  return n;
+  return n * fact(n - 1);
 }
 //<--
 
-int main() {
+void unit_tests() {
   // Автоматические тесты
+  // Модульное тестирование
   //-->
   assert( fact(1) == 1 );
   assert( fact(2) == 2 );
-  assert( fact(3) == 1 * 2 * 3 );
+  assert( fact(3) == 6 );
+  assert( fact(3) == 1 * 2 * 3);
   assert( fact(4) == 1 * 2 * 3 * 4 );
   assert( fact(5) == 1 * 2 * 3 * 4 * 5 );
-  fact(0);
+  assert( fact(6) == 1 * 2 * 3 * 4 * 5 * 6 );
+  assert( fact(7) == 1 * 2 * 3 * 4 * 5 * 6 * 7 );
+  assert( fact(0) == 1 );
   //<--
+}
+
+int main() {
+  unit_tests();
 
   // Ручное тестирование функции:
   //-->
   int N;
+  cout << "N = ";
   cin >> N;
   cout << "fact(" << N << ") = " << fact(N) << endl;
 
