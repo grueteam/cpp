@@ -1,23 +1,44 @@
-.\000_README.md
-﻿
+.\00_Assert\main.cpp
+Утверждения: assert
+-------------------
+Разработка через тестированиe
+(TDD - Test Driven Development).
 
+Разработка через тестирование (test-driven development, TDD) -
+техника разработки программного обеспечения,
+которая основывается на повторении очень коротких циклов разработки:
+* сначала пишется **тест**, покрывающий желаемое изменение,
+* затем пишется **код**, который позволит пройти тест,
+* и под конец проводится **рефакторинг** нового кода.
+``` cpp
+long long fact(int n) {
+  assert(n >= 1);
 
+  if(n >= 3)
+    return n * fact(n - 1);
 
-Конструкторы и деструкторы
---------------------------
+  return n;
+}
+```
 
-Перегрузка операторов в C++. Вывод в поток
-------------------------------------------
+Автоматические тесты
+``` cpp
+  assert( fact(1) == 1 );
+  assert( fact(2) == 2 );
+  assert( fact(3) == 1 * 2 * 3 );
+  assert( fact(4) == 1 * 2 * 3 * 4 );
+  assert( fact(5) == 1 * 2 * 3 * 4 * 5 );
+  fact(0);
+```
 
-Оператор в C++ - это некоторое действие или функция обозначенная специльным символом (символами).
-Чтобы распространять действие операторов на новые (свои) типы данных в C++ их можно перегружать.
+Ручное тестирование функции:
+``` cpp
+  int N;
+  cin >> N;
+  cout << "fact(" << N << ") = " << fact(N) << endl;
 
-Для перегрузки используется ключевое слово **operator** вместе с прототипом и объявлением функции.
-
-
-Прототипы
----------
-
+  return 0;
+```
 
 .\01_Russian\README.md
 ﻿Список всех поддерживаемых консолей?
@@ -152,12 +173,20 @@ int main() {
 }
 ```
 
-.\04_DebugMacro\main.cpp
+.\04_ref_demo\main.cpp
+int & - объявляем ссылку
+только с 2-мя именами
+переменную value
+*ptrA и value - одна и та же переменная
+.\04_refs_array\main.cpp
+int& B[100] = A;
+cout << &*Y /* <=> */ Y
+.\05_DebugMacro\main.cpp
 Макросы для отладки
 -------------------
 if(a != b){ cout << __LINE__ << " " << #a << "=" << a << " != " << #b << "=" << b << endl; };
 assert(c != NULL);
-.\05_malloc_free\main.c
+.\06_malloc_free\main.c
 Динамическая память: malloc / free
 ----------------------------------
 ``` cpp
@@ -177,7 +206,7 @@ assert(c != NULL);
   free(intArray);
 ```
 
-.\06_new_delete\main.cpp
+.\07_new_delete\main.cpp
 Динамическая память new / delete
 --------------------------------
 ``` cpp
@@ -203,3 +232,1361 @@ int main() {
 }
 ```
 
+.\08_static_stack\main.c
+Виды памяти
+-----------
+``` cpp
+int data[100000000]; // Статическая память
+
+void f(int N) { // Стек
+  //int localArray[100];
+  printf("f(%d)\n", N);
+  f(N + 1);
+}
+
+int main() {
+  int data2[100000]; // Стек
+  int i;
+  f(1);
+
+  for(i = 0; i < 4000; i++) {
+    // Динамическая память
+    if(malloc(1000000) == NULL) {
+      printf("NULL\n");
+      break;
+    }
+
+    printf("i = %d\n", i);
+  }
+
+  return 0;
+}
+```
+
+.\09_queue\main.cpp
+Структура данных: очередь
+-------------------------
+``` cpp
+// На базе массива.
+//
+//    -------------------------------
+//  <-|  |  |  |  |  |  |  |  |  |  | <-
+//    -------------------------------
+
+const int QUEUE_LEN = 10000;
+
+int data[QUEUE_LEN];
+
+int head = 0; // Индекс первого элемента очереди
+int tail = 0; // Индекс первой свободной ячейки очереди
+
+// Добавить элемент в конец очереди
+void put(int value) {
+  cout << "put(" << value << ")" << endl;
+  data[tail++ % QUEUE_LEN] = value;
+  // tail++
+}
+
+// Получить значение из начала очереди
+int get() {
+  return data[head++ % QUEUE_LEN];
+}
+
+bool isEmpty() {
+  return head <= tail;
+}
+
+int main() {
+  // Положить в очередь
+  for(int i = 1; i <= 7; i++)
+    put(i);
+
+  // Извлекаем из очереди
+  while(!isEmpty())
+    cout << "get() -> " << get() << endl;
+
+  return 0;
+}
+```
+
+.\10_list\main.cpp
+Стуктура данных: динамический список
+------------------------------------
+``` cpp
+struct ListElement {
+  int value;
+  ListElement* next;
+};
+
+// Указатель на первый элемент списка
+ListElement* root = NULL;
+
+// Добавить в начало списка
+void addToBegin(int newValue) {
+  cout << endl;
+  cout << "addToBegin " << newValue << endl;
+  ListElement* newElement = new ListElement;
+  newElement->value = newValue;
+  newElement->next = root; // NULL;
+
+  root = newElement;
+}
+
+// Удалить первый элемент списка
+void deleteFirst() {
+  // Проверяем что список пуст
+  // и если это так, выводим сообщение
+  // об ошибке и выходим из функции
+  if(root == NULL) {
+    cout << "List is empty" << endl;
+    return;
+  }
+
+  // Запоминаем ссылку на перый элемент
+  ListElement* firstElement = root;
+  cout << endl;
+  cout << "deleteFirst " << firstElement->value << endl;
+
+  // Переместим корень (указатель на начало
+  // списка) на второй элемент
+  root = firstElement->next;
+
+  // Теперь мы можем удалить первый элемент
+  // т.к. ссылка на второй элемент
+  // уже сохранена
+  delete firstElement;
+}
+
+void showList() {
+  cout << "List: " << endl;
+  ListElement* curElement = root;
+
+  while(curElement != NULL) {
+    cout << curElement->value << endl;
+    curElement = curElement->next;
+  }
+}
+
+int main() {
+  addToBegin(2);
+  showList();
+
+  addToBegin(10);
+  showList();
+
+  addToBegin(-6);
+  showList();
+
+  deleteFirst();
+  showList();
+
+  deleteFirst();
+  showList();
+
+  deleteFirst();
+  showList();
+
+  deleteFirst();
+  showList();
+
+  return 0;
+}
+```
+
+.\11_list\main.cpp
+Реализация структуры данных "Список"
+------------------------------------
+Элемент списка
+Список целиком
+Конструктор
+Так нельзя (!!!):
+root->next = NULL;
+Деструктор - метод, который вызывается при
+уничтожении объекта
+Добавить в начало списка
+Заводим новый элемент списка в динамической памяти
+Записываем в него новое значение
+(*newElement).value = newValue;
+Этот элемент должен встать в начало списка,
+т.е. все остальные элементы будут после него.
+Показать список
+Текущий элемент - сначала 1-ый
+Добавить элемент в конец списка
+Идём до последнего элемента
+for(ListElement* cur = root;
+cur->next != NULL; cur = cur->next)
+/* Ничего не надо делать :) */;
+Создаём новый элемент
+Новый элемент ставим в конец списка
+Удаляем элемент списка по значению
+Если список пуст, то искать в нём нечего
+Если первое значение подходит, то удаляем первый элемент
+Ищем значение
+Ничего не нашли
+Мы нашли элемент, который хотим удалить и это
+Соединяем "концы" цепочки
+Удаляем элемент с заданным индексом
+Если список пуст, то искать в нём нечего
+Если первое значение подходит, то удаляем первый элемент
+Ищем значение
+Ничего не нашли
+Мы нашли элемент, который хотим удалить и это
+Соединяем "концы" цепочки
+List - класс
+list - объект этого класса
+.\12_OOP_Simplest\00_intro.md
+﻿ООП - принципы: классы, объекты, прототипы
+==========================================
+
+Объектно-ориентированное программирование (ООП, OOP): абстракция, инкапсуляция, наследование и полиморфизм
+----------------------------------------------------------------------------------------------------------
+
+Парадигма программирования, в которой основные концепции: **объект** и **класс**.
+
+**Класс** - является описанием ещё не существующей сущности (объекта).
+ Фактически он описывает устройство объекта, являясь своего рода "чертежом".
+Обычно классы разрабатывают таким образом, чтобы их объекты соответствовали объектам предметной области.
+
+**Объект** - сущность, которой можно посылать сообщения, и которая может на них реагировать,
+используя свои данные. **Объект** = **экземпляр класса**.
+Данные объекта скрыты от остальной программы. Сокрытие данных называется инкапсуляцией.
+
+**Объект** - экземпляр класса, сущность в адресном пространстве вычислительной системы,
+появляющаяся при создании экземпляра класса или копирования прототипа.
+
+**Абстрагирование** - выделение набора значимых характеристик объекта, исключая из рассмотрения незначимые.
+
+**Абстракция** - набор всех характеристик объекта, значимых с точки зрения решаемых задач.
+
+**Инкапсуляция** - свойство системы, позволяющее объединить данные и методы,
+работающие с ними в классе, и скрыть детали реализации от пользователя.
+
+**Наследование** - свойство системы, позволяющее описать новый класс
+на основе уже существующего с частично или полностью заимствующейся функциональностью (данными и методами).
+Класс, от которого производится наследование, называется **базовым**, **родительским** или **суперклассом**.
+Новый класс - **потомком**, **наследником** или **производным** классом.
+
+**Полиморфизм** - возможность использовать объекты с одинаковым
+интерфейсом без передачи информации о типе и внутренней структуре объекта.
+
+**Прототип** - объект-образец, по образу и подобию которого создаются другие объекты.
+Объекты-копии могут сохранять связь с родительским объектом,
+автоматически наследуя изменения в прототипе; эта особенность определяется в рамках конкретного языка.
+В языках с прототипированием (например, JavaScript) вместо классов используются объекты-прототипы.
+
+.\12_OOP_Simplest\main.cpp
+Объявление класса
+-----------------
+Храним координаты точек как 2 отдельных массива
+``` cpp
+double x[100], y[100];
+```
+
+Создали структуру точка
+``` cpp
+struct Point {
+  double x, y;
+};
+
+// Массив из точек
+Point p[140];
+```
+
+Обращение: p[0].x, p[0].y
+
+Класс = данные + методы работы
+``` cpp
+class Point2D {
+ public:
+  double x, y;
+
+  void move(double dx, double dy) {
+    x += dx;
+    y += dy;
+  }
+
+  // Повернуть точку относительно начала координат
+  void rotate(double angle) {
+    // ...
+  }
+};
+```
+
+Модификаторы доступа: public / private / protected
+Создание экземпляра
+-------------------
+Пример использования:
+``` cpp
+int main() {
+  // Два отдельных массива
+  x[0] = 1;
+  y[0] = 2;
+  // ООП
+  p[0].x = 1;
+  p[0].y = 2;
+
+  Point p1;
+  p1.x = 2;
+
+  Point2D p2;
+  p2.x = 2;
+
+  Point2D points[100];
+  points[10].x = 10.1;
+  points[10].y = 10.3;
+  points[0].move(1, 2);
+  points[1].rotate(1.2);
+
+  Point2D A, B, C;
+  A.move(10, 2);
+
+  /*  x[10] = 1;
+    y[20] = 2;
+    move_point(10, 10, 2); */
+
+  // Динамическая память
+  Point2D* p;
+  //...
+  p = new Point2D;
+  p->x = 2;
+  p->move(10, 11);
+  (*p).move(1, 2);
+  delete p;
+
+  // Создаю массив объектов в
+  // динамической памяти
+  Point2D* pp = new Point2D[10];
+
+  // Удаляю
+  delete[] pp;
+
+  return 0;
+}
+```
+
+.\12_StackDemo\main.cpp
+``` cpp
+class Stack {
+  const static int STACK_SIZE = 100;
+  int data[STACK_SIZE];
+  // Текущий размер стека
+  int count = 0;
+ public:
+  // Положить данные на вершину стека
+  void push(int value) {
+    if(count == STACK_SIZE) {
+      cout << "Stack is full!" << endl;
+      return;
+    }
+
+    data[count++] = value;
+  }
+  // Забрать данные с вершины стека
+  int pop() {
+    if(count == 0) {
+      cout << "Stack is empty!" << endl;
+      return -1;
+    }
+
+    return data[--count];
+  }
+};
+```
+
+.\12_vectors\main.cpp
+Конструктор - вызывается после создания объекта в памяти
+Деструктор - вызывается перед удалением объекта из памяти
+Конструктор копирования
+.\13_constructor_destructor\main.cpp
+Конструкторы и деструкторы
+--------------------------
+``` cpp
+// struct - С
+// class - С++
+
+// Ключевое слово class
+// Имя_класса
+class MyClass {
+  // Количество объектов
+  static int count;
+  // Идентификатор данного объекта
+  int id;
+  int* data;
+ public:
+  // Конструктор
+  MyClass();
+  // Деструктор
+  ~MyClass();
+};
+
+// Инициализация static-переменной
+int MyClass::count = 0;
+
+MyClass::MyClass() {
+  count++;
+  id = count;
+  cout << "Constructor #" << id << endl;
+
+  data = new int[1000];
+  data[0] = 10;
+}
+
+MyClass::~MyClass() {
+  cout << "Destructor #" << id << endl;
+
+  cout << data << " " << data[0] << endl;
+  delete[] data;
+}
+
+struct A {
+  int w;
+  A(int v) {
+    w = v;
+  }
+};
+```
+
+.\14_copy_contructor\main.cpp
+Конструктор копирования
+-----------------------
+``` cpp
+// Класс "строка"
+class string {
+  static int count; // Количество строк
+  char*    Str;
+  int     size;
+ public:
+  int id; // Идентификатор данной строки
+  string(string&); // Конструктор копирования
+  // Конструктор
+  string(const char* str) {
+    id = ++count;
+    std::cout << "Constructor #" << id << " \"" << str << "\"" << std::endl;
+    size = strlen(str); // "ABC\0"
+    Str = new char[size + 1];
+    strcpy(Str, str);
+  };
+  // Вывод строки на экран
+  void show() {
+    std::cout << Str << std::endl;
+  }
+  // Деструктор
+  ~string() {
+    std::cout << "Destructor #" << id << std::endl;
+    delete[] Str; // Очищаем динамическую память
+  }
+  // Перегрузка операции присваивания
+  string& operator=(string& right) {
+    if(Str != NULL)
+      delete[] Str;
+
+    std::cout << "= #" << id << std::endl;
+    // if(Str != NULL)
+    //   delete[] Str;
+    Str = new char[right.size + 1];
+    size = right.size;
+    strcpy(Str, right.Str);
+  }
+};
+
+// Конструктор копирования
+// Создает копии динамических переменных и ресурсов
+string::string(string& x) {
+  id = ++count;
+  std::cout << "Copy constructor #" << id << std::endl;
+  // if(Str != NULL)
+  //   delete[] Str;
+  Str = new char[x.size + 1];
+  size = x.size;
+  strcpy(Str, x.Str);
+}
+
+int string::count = 0;
+
+int main() {
+  char myStr[] = "Test2";
+  std::cout << myStr << std::endl;
+
+  int i = (int)myStr;
+  std::cout << i << std::endl;
+  string s("Test");
+  s.show();
+
+  {
+    string s2 = s; // Вызов конструктора копирования
+    s2.show();
+  }
+
+
+  {
+    string s3("Hello world!");
+    s3 = s; // Операция присваивания
+    s3.show();
+  }
+
+  s.show();
+
+
+  return 0;
+}
+```
+
+.\15_ListExample\main.cpp
+Один элемент списка
+следующий элемент списка
+Список целиком, с всеми операциями
+Указатель на первый элемент списка
+ListElement *root = NULL;
+Конструктор - метод, который вызывается
+при создании объекта (экземпляра класса)
+NULL - означает что нет ни одного элемента в списке
+Деструктор (очистка памяти)
+Запоминаем 2-ой элемент списка
+(следующий после первого элемента)
+Удаляем первый элемент списка
+delete:
+1. Вызывается деструктор (если есть)
+2. Освобождается динамическая память
+Показать список
+cur->value <-> (*cur).value
+Добавить элемент в начало
+Заводим новый элемент в динамической памяти
+Заполняем новый элемент
+Подвешиваем к новому элементу старый список
+Теперь root должен ссылаться на новый элемент
+Добавить элемент в конец
+Если список пуст, то добавить в конец
+это то же что и добавить в начало
+Ищем последний элемент
+Убеждаемся в том, что это последний элемент
+списка
+Заводим новый элемент
+Подвешиваем новый элемент в конец списка
+.\16_inherit\main.cpp
+Наследование и уровни доступа
+-----------------------------
+``` cpp
+class A {
+ public: // Доступно всем
+  int a;
+ protected: // Доступно себе и наследникам
+  int forChilds;
+ private:  // Доступно только мне
+  int privateA;
+};
+
+class B : public A {
+ public:
+  int a;
+  int b;
+  void method1() {
+    a = 1;
+    b = 2;
+    forChilds = 10;
+    A::a = 10;
+    B::a = 11;
+    // privateA = 1; // Невозможно
+  }
+};
+
+class C : public B {
+ public:
+  int c;
+};
+
+int main() {
+  A a1, a2;
+  a1.a = 1;
+  B b1;
+  b1.a = 2;
+  b1.b = 3;
+  //b1.forChilds = 5;
+
+  return 0;
+}
+```
+
+.\16_inherit_sameName\main.cpp
+Наследование: поле с тем же имененем
+------------------------------------
+Пусть есть класс **A**
+с полем **x** и методом **show**
+``` cpp
+class A {
+ public:
+  int x = -1;
+  void show() {
+    cout << "x = " << x << endl;
+  }
+};
+```
+
+И его наследник **B**
+тоже с полем **x** и методом **show**
+``` cpp
+class B : public A {
+ public:
+  int x = -2;
+  void show() {
+    A::x++;
+    cout << "A::x = " << A::x << endl;
+    cout << "B::x = " << B::x << endl;
+  }
+};
+```
+
+Как получить доступ к каждому из полей **x**?
+``` cpp
+int main() {
+  A a;
+  B b;
+  a.x = 1;
+  a.show();
+  b.x = 2;
+  b.show();
+  return 0;
+}
+```
+
+.\17_inherit\main.cpp
+Наследование
+------------
+struct A <--> class A { public:
+class A <--> struct A { private:
+``` cpp
+struct A {
+  static int staticInClass;
+  int a; // Поле доступно отовсюду
+
+  void doA() {
+    cout << "doA()" << endl;
+    onlyInA = 2;
+    cout << "onlyInA = " << onlyInA << endl;
+    forChilds = 10;
+  };
+ private:
+  int onlyInA; // Только внутри класса A
+ protected:
+  int forChilds; // Внутри класса A и в наследниках
+};
+```
+
+B - наследник A
+``` cpp
+struct B : public A {
+  int b;
+  int forChilds; // Поле с тем же именем
+  void doB() {
+    cout << "doB()" << endl;
+    //onlyInA = 2; // Недоступно в наследниках
+    doA();
+    //cout << "onlyInA = " << onlyInA << endl;
+    A::forChilds = 12;
+    forChilds = 20; // Работает
+    this->forChilds = 20; // Работает
+
+    cout << "A::forChilds = " << A::forChilds << endl;
+    cout << "B::forChilds = " << B::forChilds << endl;
+  };
+};
+```
+
+Множественное наследование
+show(); // Ошибка компиляции
+Мы должны явно указать из какого предка вызываем метод
+потому что это глобальная переменная
+a.onlyInA = 3; // 'int A::onlyInA' is private
+'int A::forChilds' is protected
+cout << a.forChilds << endl;
+Нет доступа, т.к. onlyInA private
+b.onlyInA = 10;
+c.a = 1; // Ошибка из-за protected наследования
+c.b = 2; // Ошибка из-за protected наследования
+c.doA();
+c.doB();
+x.doL();
+.\18_polymorph\main.cpp
+``` cpp
+// Фигура
+struct Shape {
+  //virtual void show(){
+  //  cout << "Shape" << endl;
+  //};
+  virtual void show() = 0; // Абстрактный метод
+ protected:
+  // virtual void doA() = 0;
+  // virtual void doB() = 0;
+  // virtual void doC() = 0;
+  // virtual void doD() = 0;
+  // virtual void doE() = 0;
+  //int x;
+ private:
+  char c1;
+  char c2;
+  char c3;
+  char c4;
+  char c5;
+} __attribute__((packed));
+```
+
+Квадрат
+``` cpp
+struct Square : public Shape {
+  double side;
+  Square(double s) : side(s) { }
+  void show() {
+    cout << "Square side = " << side << endl;
+  }
+};
+```
+
+Прямоугольник
+``` cpp
+struct Rectangle : public Shape {
+  double height, width;
+  Rectangle(double h, double w) :
+    height(h), width(w) { }
+  void show() {
+    cout << "Rectangle " << height <<
+         " x " << width << endl;
+  }
+};
+```
+
+``` cpp
+int main() {
+  // Shape shape; // Ошибка компиляции
+  cout << sizeof(Shape) << endl;
+  Shape* s[] = {
+    new Square(10),
+    new Rectangle(2, 3),
+    new Square(15),
+    // new Shape(),
+  };
+
+  for(int i = 0; i < 3; ++i)
+    s[i]->show();
+
+  return 0;
+}
+```
+
+.\19_setter_getter\main.cpp
+``` cpp
+struct A {
+ private:
+  int a;
+
+ public:
+  A() {
+    a = 33;
+  }
+
+  // setter - метод для установки значения поля
+  void setA(int value) {
+    cout << "a = " << value << endl;
+    a = value;
+  }
+  // getter - метод для получения значения поля
+  int getA() {
+    return a;
+  }
+};
+
+
+int main() {
+  A a1; // A - класс, a1 - объект
+  a1.setA(20);
+  cout << a1.getA() << endl;
+  return 0;
+}
+```
+
+.\20_getter_setter_square\main.cpp
+Зачем нужны get/set методы?
+---------------------------
+Don’t Repeat Yourself
+http://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself
+.\20_getter_setter_square\square.cpp
+side = sqrt(value);
+.\20_getter_setter_square\square.h
+Инкапсуляция
+private: // Инкапсуляция
+double side;
+Получить сторону квадрата
+return side;
+Задать сторону квадрата
+side = value;
+Получить площадь
+return side*side;
+Задать площадь
+.\21_task_rational\main.cpp
+Перегрузка операторов в C++. Вывод в поток
+------------------------------------------
+**Оператор в C++** - это некоторое действие или функция обозначенная специльным символом (символами).
+Чтобы распространять действие операторов на новые (свои) типы данных в C++ их можно перегружать.
+Для перегрузки используется ключевое слово **operator** вместе с прототипом и объявлением функции.
+Практика: класс "рациональная дробь"
+------------------------------------
+Сокращение типа
+``` cpp
+typedef long long ll;
+```
+
+НОД - Наибольший общий делитель.
+GCD - Greatest common divisor.
+``` cpp
+long GCD(long a, long b) {
+  return (b == 0) ? a : GCD(b, a % b);
+}
+```
+
+``` cpp
+// Рациональная дробь: p/q
+class Rational {
+  long p, q; // p - числитель, q - знаменатель
+  // Сокращение дроби
+  void normalize() {
+    long d = GCD(p, q); // Вычисляем наибольший общий делитель
+    p /= d; // делим на него числитель
+    q /= d; // делим на него знаменатель
+  }
+  void show(ostream& os) const {
+    // Сокращаем дробь если надо
+    long d = GCD(p, q); // Вычисляем наибольший общий делитель
+    long px = p / d; // делим на него числитель
+    long qx = q / d; // делим на него знаменатель
+
+    if(qx < 0) {
+      px = -px;
+      qx = -qx;
+    }
+
+    // Если знаменатель равен 1
+    // то это целое число
+    if(qx == 1)   // Условие (1)
+      os << px << endl;
+    else {
+      // Целая часть
+      long whole = px / qx;
+
+      if(whole != 0)
+        os << whole << " ";
+      else if(px < 0)
+        os << "-";
+
+      px -= whole * qx;
+      px = abs(px);
+      assert(px > 0);
+      // Если число целое, то должно было сработать
+      // первое условие (1)
+      assert(px % qx != 0);
+      os << px << "/" << qx << endl;
+    }
+  }
+ public:
+  // TODO: Конструктор
+  Rational(long pi, long qi) :
+    p(pi), q(qi) {
+    assert(q != 0);
+    //if(q == 0){
+    //  cout << "q == 0" << endl;
+    //  halt(1);
+    //}
+  }
+  Rational(const char* message) {
+    cout << message << " ";
+    cout << "p = ";
+    cin >> p;
+    cout << "q = ";
+    cin >> q;
+    normalize();
+  }
+  // Показать дробь на экран (в консоль)
+  void show() {
+    show(cout);
+  }
+
+  // Сложение дробей
+  void add(Rational& right) {
+    //   p    right.p
+    //  --- + -------
+    //   q    right.q
+    p = p * right.q + right.p * q;
+    //  --------------------------
+    q =       q * right.q;
+
+    // Для предотвращения переполнений
+    normalize();
+  }
+
+  // a + b
+  const Rational operator+(Rational& right) {
+    Rational res = *this;
+    res.add(right);
+    return res;
+  }
+
+  Rational operator+(int right) {
+    Rational res = *this;
+    Rational r(right, 1);
+    res.add(r);
+    return res;
+  }
+
+  friend
+  Rational
+  operator+(long left, Rational& right) {
+    Rational res(left, 1);
+    res.add(right);
+    return res;
+  }
+
+  void sub(Rational& right) {
+    p = p * right.q - right.p * q;
+    //  --------------------------
+    q =       q * right.q;
+
+    normalize();
+  }
+
+  Rational operator-(Rational& right) {
+    Rational res = *this;
+    res.sub(right);
+    return res;
+  }
+
+  // Конструктор копирования
+  /* Rational(const Rational &r){
+     //cout << r.p << "/" << r.q << endl;
+     p = r.p;
+     q = r.q;
+     //cout << "Copy contructor " << p << "/" << q << endl;
+   } */
+
+  friend ostream& operator <<(ostream& os, const Rational& r) {
+    r.show(os);
+    return os;
+  }
+};
+
+#define SHOW(x) { cout << #x << " = " << (x) << endl; }
+
+int main() {
+  /* Rational x(3, 1);
+   x.show();
+
+   Rational y(6, 4);
+   y.show(); */
+
+  Rational aa(2, 6), bb(3, 6);
+  SHOW(aa);
+  SHOW(bb);
+  SHOW(aa - bb);
+
+  Rational a(4, 6), b(11, 2);
+  SHOW(a);
+  SHOW(b);
+  Rational c = a + b;
+  SHOW(c);
+  SHOW(a + b);
+  SHOW(a - b);
+  SHOW(a / b);
+  SHOW(a * b);
+  SHOW(a);
+  SHOW(b);
+
+  // Rational c = b + a;
+
+  int i = 2, j = 3;
+  int tt = i + j;
+  Rational c1 = i + b;
+
+  b.show();
+  c1.show();
+
+  Rational x(4, 6), y(1, 3);
+  x.add(y);
+  x.show();
+
+  Rational yy("Vvedite:");
+  yy.show();
+
+  return 0;
+}
+```
+
+.\22_this_demo\main.cpp
+Работа с this
+-------------
+``` cpp
+class Boy;
+
+class Girl {
+ public:
+  Boy* boy;
+  void reg(Boy* b) {
+    boy = b;
+  }
+  void answer();
+};
+
+class Boy {
+ public:
+  Girl* girl;
+  void reg(Girl* g) {
+    girl = g;
+    girl->reg(this);
+  }
+  void dialog() {
+    cout << "Boy: hi!" << endl;
+    girl->answer();
+  }
+  void answer() {
+    cout << "Boy: I'm find! And how are you?" << endl;
+  }
+};
+
+void Girl::answer() {
+  cout << "Girl: Hi! How are you?" << endl;
+  boy->answer();
+}
+
+
+int main() {
+  Girl g;
+  Boy b;
+  b.reg(&g);
+
+  b.dialog();
+
+  return 0;
+}
+```
+
+.\23_diamond_inherit\main.cpp
+Diamond Inheritance
+-------------------
+``` cpp
+//   A
+//  / \
+// B   C
+//  \ /
+//   D
+#include <iostream>
+
+using namespace std;
+
+struct X {
+  void show() {
+    cout << "X" << endl;
+  };
+};
+
+struct A {
+  char name;
+  A() : name('A') {};
+  virtual
+  void show() {
+    cout << "show_A " << name << endl;
+  };
+};
+
+struct B : virtual public A {
+  B() {
+    A::name = 'B';
+  };
+  void show() {
+    cout << "show_B " << name << endl;
+  };
+};
+
+struct C : virtual public A {
+  C() {
+    A::name = 'C';
+  };
+  void show() {
+    cout << "show_C " << name << endl;
+  };
+};
+
+struct D : public B, public C {
+  D() {
+    B::name = 'D';
+  };
+  void show() {
+    cout << "show_D " << B::name << endl;
+    B::show();
+    C::show();
+    C::A::show();
+    B::A::show();
+  };
+};
+
+int main() {
+  /*A a;
+  a.show();
+  B b;
+  b.show();
+  C c;
+  c.show(); */
+
+  D d;
+  d.show();
+
+  /*A* x[4] = {new A, new B, new C, new D};
+  for(int i = 0; i < 4; ++i)
+    x[i]->show();
+  */
+  // Полиморфизм
+  A* x[4] = { new B, new A, new C, new D };
+  /* A* x[4];
+   x[0] = new C;
+   x[1] = new B;
+   x[2] = new A;
+   x[3] = new D; */
+
+  cout << "sizeof(X) = " << sizeof(X) << endl;
+  cout << "sizeof(*X) = " << sizeof(X*) << endl;
+
+  cout << "+ VMT" << endl;
+  cout << "sizeof(A) = " << sizeof(A) << endl;
+  cout << "sizeof(*A) = " << sizeof(A*) << endl;
+
+  for(int i = 0; i < 4; ++i)
+    x[i]->show();
+
+  for(int i = 0; i < 4; ++i)
+    delete x[i];
+
+  return 0;
+}
+```
+
+.\25_iterator\main.cpp
+Итерируемся по set
+for(vector<int>)
+.\26_private_constructor_singletone\main.cpp
+Для чего использовать private-конструкторы?
+-------------------------------------------
+Шаблон проектирования Singletone
+``` cpp
+// Создаем класс S
+// Задача: сделать чтобы в программе
+// был только один экземпляр этого класса
+// Singletone / Одиночка
+class S {
+  //private: // по-умолчанию и так private
+  static int count;
+  int id;
+  // private (частный) конструктор
+  S() {
+    count++;
+    id = count;
+    cout << "Constructor #" << id << endl;
+  }
+  // Один-единственный экземпляр класса S
+  static S* instance;
+ public:
+  // Единственный способ получить экземпляр
+  // класса S - вызвать этот метод
+  static S& getInstance() {
+    if(instance == NULL)
+      instance = new S;
+
+    return *instance;
+  }
+  void show() {
+    cout << "S #" << id << endl;
+  }
+  ~S() {
+    cout << "Destructor: #" << id << endl;
+  }
+};
+
+int S::count = 0;
+S* S::instance = NULL;
+
+int main() {
+  //S s1;
+  //S *s = new S;
+  S a = S::getInstance(), b = S::getInstance();
+  a.show();
+  b.show();
+  S c = S::getInstance();
+  c.show();
+  return 0;
+}
+```
+
+.\27_string_overflow\main.cpp
+Переполнение строки
+-------------------
+``` cpp
+union Bytes {
+  int i; // Тип int занимает 4 байта
+  char bytes[4]; // Он же в виде 4-х отдельных
+};
+```
+
+``` cpp
+struct Shape {
+  char type; // type = 'C' - круг, 'S' - квадрат
+  double x, y;
+  union {
+    double R;
+    double Side;
+  };
+};
+```
+
+``` cpp
+struct Point {
+  double x, y;
+
+  // Расстояние между точками
+  double dist(Point b) {
+    return sqrt(pow(x - b.x, 2) +
+                pow(y - b.y, 2));
+  }
+
+};
+```
+
+SetConsoleCP(1251); // Ввод с консоли в кодировке 1251
+SetConsoleOutputCP(1251); // Вывод на консоль в кодировке 1251.
+``` cpp
+  char str[10]; // Строка до 9 символов, последний символ 0
+
+  cout << "Введите строку больше 10 символов: ";
+  cin >> str;
+
+  freopen("result.txt", "w", stdout);
+  cout << str << endl;
+```
+
+.\HomeWork\main.cpp
+Домашняя работа
+---------------
+``` cpp
+// Элемент стека и очереди
+struct E {
+  int value; // Значение элемента
+  E* next; // Указатель на следующий элемент
+};
+
+// Стек
+struct Stack {
+  E* top; // Вершина стека
+  // Конструктор
+  Stack() : top(NULL) {}
+  // Значение поместить на вершину стека
+  void push(int value) {
+    // TODO: реализовать
+  }
+  // Взять значение с вершины стека
+  int pop() {
+    // TODO: реализовать
+  }
+};
+
+// Очередь
+struct Queue {
+  E* head; // "Голова" - начало очереди
+  E* tail; // "Хвост" - конец очереди
+  // Конструктор
+  Queue() : head(NULL), tail(NULL) {};
+  // В конец очереди
+  void put(int value) {
+    // TODO: реализовать
+  }
+  // Забрать первый элемент из очереди
+  int get() {
+    // TODO: реализовать
+  }
+};
+
+int main() {
+  Stack s;
+  s.push(2);
+  s.push(3);
+  cout << "3 - " << s.pop() << endl;
+  cout << "2 - " << s.pop() << endl;
+
+  Stack s2;
+  s2.push(10);
+  s.push(11);
+  cout << "11 - " << s.pop() << endl;
+  cout << "10 - " << s2.pop() << endl;
+
+  Queue q;
+  q.put(10);
+  q.put(14);
+  cout << "10 - " << q.get() << endl;
+  cout << "14 - " << q.get() << endl;
+
+  return 0;
+}
+```
+
+.\HomeWork\task.cpp
+Домашнее задание:
+Реализовать стек и очередь
+Элемент стека и очереди
+Стек
+Конструктор
+Значение поместить на вершину стека
+Взять значение с вершины стека
+Конструктор
+В конец очереди
+Забрать первый элемент из очереди
+.\HomeWork_Done\main.cpp
+Элемент стека и очереди
+Стек
+Конструктор
+Значение поместить на вершину стека
+Записываем значение,
+которое надо поместить
+на вершину стека
+Новый элемент на вершине стека
+поэтому все остальные следуют за ним
+Ставим новый элемент в начало списка
+Взять значение с вершины стека
+Запоминаем результат
+- значение элемента-"вершины" стека
+1-A
+Запоминаем ссылку на удаляемый
+элемент
+1-B
+2. Перемещаем вершину на следующий
+3. Реально удаляем элемент
+4. Возвращаем результат
+Конструктор
+В конец очереди
+Создаём новый элемент
+Если очередь пуста
+Если в очереди уже есть элементы
+"Присоединяем" элемент к последнему
+элементу в очереди
+Забрать первый элемент из очереди
+Запоминаем первый элемент
+Значение, которое мы в конце вернём
+Передвигаем указатель на начало
+очереди на следующий элемент
+Если очередь пуста, то
+хвост очереди не указывает ни на
+какой элемент
+Удаляем первый элемент из
+динамической памяти
+Возвращаем его значение
+.\HomeWork_Done\task.cpp
+Домашнее задание:
+Реализовать стек и очередь
+Элемент стека и очереди
+Стек
+Конструктор
+Значение поместить на вершину стека
+Взять значение с вершины стека
+Конструктор
+В конец очереди
+Забрать первый элемент из очереди
