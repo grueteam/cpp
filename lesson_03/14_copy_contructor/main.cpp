@@ -56,6 +56,7 @@ string::string(string& x) {
 }
 
 int string::count = 0;
+//<--
 
 int main() {
   char myStr[] = "Test2";
@@ -71,7 +72,6 @@ int main() {
     s2.show();
   }
 
-
   {
     string s3("Hello world!");
     s3 = s; // Операция присваивания
@@ -83,4 +83,3 @@ int main() {
 
   return 0;
 }
-//<--

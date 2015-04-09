@@ -986,33 +986,6 @@ string::string(string& x) {
 }
 
 int string::count = 0;
-
-int main() {
-  char myStr[] = "Test2";
-  std::cout << myStr << std::endl;
-
-  int i = (int)myStr;
-  std::cout << i << std::endl;
-  string s("Test");
-  s.show();
-
-  {
-    string s2 = s; // Вызов конструктора копирования
-    s2.show();
-  }
-
-
-  {
-    string s3("Hello world!");
-    s3 = s; // Операция присваивания
-    s3.show();
-  }
-
-  s.show();
-
-
-  return 0;
-}
 ```
 
 .\15_ListExample\main.cpp
