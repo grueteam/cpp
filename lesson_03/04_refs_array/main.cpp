@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//-->
 int main() {
   int A[100];
   int* X;
@@ -28,7 +29,6 @@ int main() {
   cout << B[1] << endl;
   cout << *(B + 1) << endl;
 
-
-
   return 0;
 }
+//<--
