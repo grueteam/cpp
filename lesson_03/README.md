@@ -162,6 +162,12 @@ long long fact(int n) {
 
 .\01_task_rec\main.cpp
 
+Строка в C
+----------
+Заканчивается на символ 0.
+"ABC" -> 'A', 'B', 'C', код 0
+strlen(S) - считает символы в строке.
+
 Генерация правильных скобочных последовательностей
 --------------------------------------------------
 N = 1
@@ -176,11 +182,6 @@ N = 3
 * (()())
 * ...
 
-Строка в C
-----------
-Заканчивается на символ 0.
-"ABC" -> 'A', 'B', 'C', код 0
-strlen(S) - считает символы в строке.
 ``` cpp
 // Готовая строка скобок
 char* S;
@@ -245,102 +246,62 @@ int main() {
 }
 ```
 
-.\01_union\main.cpp
+.\01_types_cast\main.cpp
 
-Объединения - union
--------------------
-Два и более объекта занимают одну и ту же ячейку памяти
-Пример:
+Приведение типов
+----------------
 ``` cpp
-union HH {
-  int a;
-  int b;
-  char c;
-};
+  long l = 2133214;
+  int a = l; // Неявное приведение типов
+  cout << " a = " << a << endl;
+
+  double d = l; // Неявное приведение
+  int xx = d;
+
+  // Явное приведение типов
+  int *iPtr = (int *)l;
+
+  //iPtr = static_cast<int *>(l);
+  //iPtr = dynamic_cast<int *>(l);
+  iPtr = reinterpret_cast<int *>(l);
 ```
 
-Как выглядит переменная какого-то типа в памяти?
+.\02_references\main.cpp
 
-Чтобы абстрагироваться от конкретного типа
-используем **typedef**:
-typedef Определение_типа Имя_нового_типа;
+Указатели и ссылки
+------------------
+* Указатели есть и в C и в C++
+* Ссылки есть только в C++
 ``` cpp
-typedef unsigned long MyType;
-```
+void f(int*);
 
-Объединение:
-``` cpp
-union InMemoryPresentation {
-  MyType field; // Поле нашего типа
-  unsigned char b[sizeof(MyType)]; // Массив байт того же размера
-};
-```
-
-``` cpp
-  InMemoryPresentation u;
-  u.field = 5; // 'A';
-
-  for(int i = 0; i < sizeof(MyType); ++i) {
-    cout << i << ". ";
-
-    for(int b = 7; b >= 0; --b) {
-      unsigned char byte = u.b[i];
-      // Число:    01101110  00001101
-      // Ном.бита: 76543210         1
-      cout << ((byte >> b) & 1);
-    }
-
-    cout << endl;
-  }
-
-```
-
-.\02_var_reference\main.cpp
-
-Значение / ссылка / указатель
------------------------------
-Передача параметров
-``` cpp
-// По значению
-void f1(int i) {
-  i++;
-  SHOW(i)
+void f(int* a){
+  *a = 10;
 }
 
-// По ссылке (только C++)
-void f2(int& i) {
-  i++;
-  SHOW(i)
-}
-
-// По указателю
-void f3(int* i) {
-  (*i)++;
-  SHOW(*i)
-}
-
-int main() {
-  int i = 0;
-  SHOW(i);
-
-  f1(i);
-  SHOW(i);
-  f2(i);
-  SHOW(i);
-  f3(&i);
-  SHOW(i);
-
-  return 0;
-}
-```
-
-.\03_references\main.cpp
-
-``` cpp
 int main() {
   int a = 10;
+  // aPtr - указатель
+  int* aPtr = &a, aa = 2; // aPtr - указатель, b - не указатель
+  aPtr = &a; // записываем в него адрес a
+  SHOW(a); // a = 10
+  // *aPtr = что-то..
+  // Записываем значение туда, куда указывает
+  // aPtr
+  *aPtr = 12; // a = 12
+  SHOW(a);
+  // Перемещаем указатель
+  // теперь он будет указывать на aa
+  aPtr = (int *) aa;
+  // *aPtr = 1000; -- пишем в неведомую ячейку
+  aPtr = &aa;
+  *aPtr = 1000;
+  SHOW(aa);
+
+  int *bPtr, c;
+
   int& b = a; // Ссылка
-  // int &bb;  // error: 'bb' declared as
+  //int &bb;  // error: 'bb' declared as
   // reference but not initialized
   int d = 22;
   // &b = d; // Нельзя переопределять ссылки
@@ -367,40 +328,69 @@ int main() {
 }
 ```
 
+.\03_var_reference\main.cpp
+
+Значение / ссылка / указатель
+-----------------------------
+* **__FUNCTION__** - имя текущей функции
+* **__FILE__** - имя текущего файла
+* **__LINE__** - номер текущей строки
+Передача параметров в функции
+``` cpp
+// По значению
+void f1(int i) {
+  SHOW(i)
+  i++; // i - это уже другая переменная
+    // значение копируется из внешней i
+    // i - локальная переменная
+  SHOW(i) // i = 1
+}
+
+int globalVar = 10;
+
+// По ссылке (только C++)
+void f2(int& i) {
+  // У i тот же адрес, что и у j
+  cout << "i - alias for j" << endl;
+  SHOW(i)
+  i++;
+  SHOW(i)
+  // i = &globalVar;
+}
+
+// По указателю
+void f3(int* i) {
+  (*i)++;
+  SHOW(*i)
+  i = &globalVar;
+}
+
+int main() {
+  int j = 0; // i или j не имеет значения
+  SHOW(j); // j = 0
+
+  f1(j);
+  SHOW(j); // j = 0
+
+  f2(j);
+  SHOW(j); // j = 1
+
+  f3(&j);
+  SHOW(j);
+
+  return 0;
+}
+```
+
 .\04_ref_demo\main.cpp
 
 ``` cpp
-void f1(int value) {
-  value++;
-  cout << "f1 = " << value << endl;
+void inc2(int &value){
+  value += 2;
 }
-
-void f2(int& value) {
-  value++;
-  cout << "f2 = " << value << endl;
-}
-
-void f3(int* value) {
-  (*value)++;
-  cout << "f3 = " << *value << endl;
-}
-
 
 int main() {
-
-  int value = 1;
-
-  f1(value);
-  cout << "after f1 = " << value << endl;
-
-  f2(value);
-  cout << "after f2 = " << value << endl;
-
-  f3(&value);
-  cout << "after f3 = " << value << endl;
-
-
-  value = 11;
+  int value = 11;
   // int & - объявляем ссылку
   int& b = value; // b и value - одна и та же переменная
   // только с 2-мя именами
@@ -420,22 +410,52 @@ int main() {
   int d;
   ptrA = &d;
 
+  int x = 1, y = 10;
+  inc2(x); inc2(y);
+
   return 0;
 }
 ```
 
 .\04_refs_array\main.cpp
 
+Указатели, ссылки и массивы
+---------------------------
 ``` cpp
 int main() {
   int A[100];
-  int* X;
   A[0] = 42;
   A[1] = 56;
+  SHOW(A[0])
+  SHOW(*A + 10);
+
+  int* X;
 
   int* B = A; // B - второе имя для массива A
-  // int& B[100] = A;
+  SHOW(B[0]);
+  B[1] = 99;
+  SHOW(A[1]); // 99
+
+  A[1] = 101;
+  B = A + 1; // Сдвиг на один элемент
+  SHOW(A[1]) // 101
+  SHOW(B[0]) // 101
+
   int*& Y = X; // Y - второй имя для переменной X
+  X = new int[100];
+  int* Z = X;
+  X[10] = 55;
+  assert(Y[10] == X[10]);
+  assert(Z[10] == X[10]);
+
+  X = new int[100];
+  X[10] = 56;
+  assert(Y[10] == X[10]);
+  // Не работает: assert(Z[10] == X[10]);
+
+  int a1 = 10, a2 = 4;
+  //  int& BB[] = { &a1, &a2 };
+  // TODO: разобраться
 
   int K = 10;
 
@@ -472,6 +492,60 @@ int main() {
 #define ASSERT_EQ(a,b) ((a == b) ? (void)0 : _assert(#a" != "#b, __FILE__, __LINE__))
 ```
 
+.\05_union\main.cpp
+
+Объединения - union
+-------------------
+Два и более объекта занимают одну и ту же ячейку памяти
+Пример:
+``` cpp
+union HH {
+  int a;
+  int b;
+  char c;
+};
+```
+
+Как выглядит переменная какого-то типа в памяти?
+
+Чтобы абстрагироваться от конкретного типа
+используем **typedef**:
+typedef Определение_типа Имя_нового_типа;
+``` cpp
+typedef unsigned int MyType;
+```
+
+Объединение:
+``` cpp
+union InMemoryPresentation {
+  MyType field; // Поле нашего типа
+  unsigned char b[sizeof(MyType)]; // Массив байт того же размера
+};
+```
+
+``` cpp
+  InMemoryPresentation u;
+  u.field = 76; // 'A';
+
+  for(int i = 0; i < sizeof(MyType); ++i) {
+    cout << i << ". ";
+
+    for(int b = 7; b >= 0; --b) {
+      unsigned char byte = u.b[i];
+      // Число:    01101110  00001101
+      // Ном.бита: 76543210         1
+      // Вырезаем b-ый бит
+      cout << ((byte >> b) & 1);
+    }
+    cout << endl;
+  }
+```
+
+Для intel-совместимых процессоров
+младший байт первый
+Intel: little-endian: "остроконечный"
+big-endian, дословно: "тупоконечный"
+TODO: посмотреть endian.h
 .\06_0_static_stack\main.c
 
 Виды памяти
@@ -538,15 +612,36 @@ struct MyStruct {
 int main() {
   // Отводим динамическую память
   MyStruct* p = new MyStruct;
+   // p - указатель на динамическую память
 
   // Освобождаем динамическую память
-  delete p;
+  delete p; // new без скобок, delete без скобок
 
   // "Заводим" массив в динамической памяти
   int* intArray = new int[1000];
 
   // Освобождаем память
-  delete[] intArray;
+  delete[] intArray; // освобождаем со []
+
+  int **array2D = new int*[100];
+  for(int i = 0; i < 100; ++i)
+    array2D[i] = new int[100];
+
+  // Используем
+  array2D[1][3] = 100;
+
+  for(int i = 0; i < 100; ++i)
+    delete[] array2D[i];
+  delete[] array2D;
+
+  int *array2Dx[100];
+  for(int i = 0; i < 100; ++i)
+    array2Dx[i] = new int[100];
+  // Используем
+  array2Dx[1][3] = 100;
+  // Очищаем память
+  for(int i = 0; i < 100; ++i)
+    delete[] array2Dx[i];
 
   return 0;
 }
@@ -616,6 +711,7 @@ ListElement* root = NULL;
 void addToBegin(int newValue) {
   cout << endl;
   cout << "addToBegin " << newValue << endl;
+
   ListElement* newElement = new ListElement;
   newElement->value = newValue;
   newElement->next = root; // NULL;
@@ -650,12 +746,10 @@ void deleteFirst() {
 
 void showList() {
   cout << "List: " << endl;
-  ListElement* curElement = root;
-
-  while(curElement != NULL) {
+  for(ListElement* curElement = root;
+    curElement != NULL;
+    curElement = curElement->next)
     cout << curElement->value << endl;
-    curElement = curElement->next;
-  }
 }
 
 int main() {
@@ -2036,8 +2130,10 @@ struct Queue {
     // TODO: реализовать
   }
 };
+```
 
-int main() {
+Пример использования
+``` cpp
   Stack s;
   s.push(2);
   s.push(3);
@@ -2053,11 +2149,12 @@ int main() {
   Queue q;
   q.put(10);
   q.put(14);
+  q.put(99);
   cout << "10 - " << q.get() << endl;
   cout << "14 - " << q.get() << endl;
+  cout << "99 - " << q.get() << endl;
+```
 
-  return 0;
-}
 ```
 
 .\HomeWork\task.cpp

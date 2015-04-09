@@ -28,7 +28,7 @@ int main() {
   char* c = NULL; //new
   assert(c == NULL);
 
-  ASSERT_EQ(2 * 2 + 4, 5 - 1);
+  ASSERT_EQ(2 * 2 + 4, 8);
 
   char a = 'a' + 1;
 

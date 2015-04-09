@@ -17,6 +17,7 @@ ListElement* root = NULL;
 void addToBegin(int newValue) {
   cout << endl;
   cout << "addToBegin " << newValue << endl;
+
   ListElement* newElement = new ListElement;
   newElement->value = newValue;
   newElement->next = root; // NULL;
@@ -51,12 +52,11 @@ void deleteFirst() {
 
 void showList() {
   cout << "List: " << endl;
-  ListElement* curElement = root;
 
-  while(curElement != NULL) {
+  for(ListElement* curElement = root;
+      curElement != NULL;
+      curElement = curElement->next)
     cout << curElement->value << endl;
-    curElement = curElement->next;
-  }
 }
 
 int main() {

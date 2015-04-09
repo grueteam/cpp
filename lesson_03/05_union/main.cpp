@@ -2,6 +2,7 @@
 // -------------------
 // Два и более объекта занимают одну и ту же ячейку памяти
 #include <iostream>
+#include <bits/
 
 #define SHOW(x) cout << #x << " = " << x << endl;
 
@@ -27,7 +28,7 @@ void demo_HH() {
 // typedef Определение_типа Имя_нового_типа;
 
 //-->
-typedef unsigned long MyType;
+typedef unsigned int MyType;
 //<--
 
 // Объединение:
@@ -38,7 +39,6 @@ union InMemoryPresentation {
 };
 //<--
 
-
 int main() {
   demo_HH();
 
@@ -48,7 +48,7 @@ int main() {
 
   //-->
   InMemoryPresentation u;
-  u.field = 5; // 'A';
+  u.field = 76; // 'A';
 
   for(int i = 0; i < sizeof(MyType); ++i) {
     cout << i << ". ";
@@ -57,6 +57,7 @@ int main() {
       unsigned char byte = u.b[i];
       // Число:    01101110  00001101
       // Ном.бита: 76543210         1
+      // Вырезаем b-ый бит
       cout << ((byte >> b) & 1);
     }
 
@@ -67,3 +68,8 @@ int main() {
 
   return 0;
 }
+// Для intel-совместимых процессоров
+// младший байт первый
+// Intel: little-endian: "остроконечный"
+// big-endian, дословно: "тупоконечный"
+// TODO: посмотреть endian.h
