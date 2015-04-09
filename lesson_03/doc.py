@@ -3,7 +3,7 @@ import os
 import sys
 
 PREFIX = u'//'
-PREFIX = u'///'
+PREFIX2 = u'///'
 
 sys.stdout = open("README.md", "w", encoding="utf-8")
 
@@ -43,6 +43,8 @@ def parse(file_name):
                 print(line.rstrip())
                 continue
             s = line.strip()
+            if s.startswith(PREFIX2):
+                print(s[len(PREFIX2):].strip())
             if s.startswith(PREFIX):
                 print(s[len(PREFIX):].strip())
 
