@@ -5,12 +5,15 @@
 using namespace std;
 
 // Элемент списка
+//-->
 struct ListElement {
   int value; // Значение элемента списка
   ListElement* next; // Указатель на следующий элемент списка
 };
+//<--
 
 // Список целиком
+//-->
 struct List {
   ListElement* root; // Указатель на первый элемент
 
@@ -161,8 +164,11 @@ struct List {
     delete toDelete;
   }
 };
+//<--
 
 int main() {
+  // Тестирование
+  //-->
   List list; // Создали список
   // List - класс
   // list - объект этого класса
@@ -200,8 +206,7 @@ int main() {
 
   list.deleteAt(2);
   list.show();
-
-  int* a, b;
+  //<--
 
   return 0;
 }
