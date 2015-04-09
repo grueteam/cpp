@@ -33,10 +33,8 @@ void sum(int N, int m) {
   // Окончание рекурсии
   if(N == 0) {
     cout << NN << " = ";
-
     for(int i = 0; i < K - 1; ++i)
       cout << A[i] << " + ";
-
     cout << A[K - 1] << endl;
     return;
   }
@@ -56,17 +54,12 @@ void sum(int N, int m) {
 void sum(int N) {
   sum(N, N);
 }
-//<--
 
-//-->
 int main() {
   // Вводим число N
-  cout << "N = ";
-  cin >> NN;
-
+  cout << "N = "; cin >> NN;
   // Вывод разложения на слагаемые
   sum(NN);
-
   return 0;
 }
 //<--
