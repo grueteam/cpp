@@ -58,6 +58,7 @@ int main() {
 
   // Тестирование
   Point c = sub(a, b);
+  cout << c.x << " " << c.y << endl;
 
   return 0;
 }

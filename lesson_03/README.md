@@ -1224,6 +1224,21 @@ struct Queue {
 Как для векторов.
 Точка (1, 2) - вектор (1, 2).
 
+Например:
+```cpp
+struct Point {
+  double x, y;
+};
+
+```
+
+Тестирование:
+```cpp
+  Point c = sub(a, b);
+  cout << c.x << " " << c.y << endl;
+```
+
+
 
 
 
