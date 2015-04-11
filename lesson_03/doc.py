@@ -45,6 +45,7 @@ def parse(file_name):
             s = line.strip()
             if s.startswith(PREFIX2):
                 print(s[len(PREFIX2):].strip())
+                continue
             if s.startswith(PREFIX):
                 print(s[len(PREFIX):].strip())
 
